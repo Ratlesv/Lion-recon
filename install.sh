@@ -62,11 +62,14 @@ pip3 install -r /opt/Sublist3r/requirements.txt
 #------------------------------------------Installing Url Crawlers ---------------------------------------------------
 #---------------------------------------------------------------------------------------------------------------------
 echo "[+] Installing Waybackurls....."
-go install github.com/tomnomnom/qsreplace@latest
+go install github.com/tomnomnom/waybackurls@latest
+cp /root/go/bin/waybackurls /usr/local/bin/
 echo "[+] Installing gau - Get All Urls"
 go install github.com/lc/gau/v2/cmd/gau@latest
+cp /root/go/bin/waybackurls /usr/local/bin/
 echo "[+] Installing gauplus........"
 go install github.com/bp0lr/gauplus@latest
+cp /root/go/bin/waybackurls /usr/local/bin/
 echo "[+] Installing Paramspider......"
 git clone https://github.com/devanshbatham/ParamSpider.git
 mv ParamSpider /opt/
