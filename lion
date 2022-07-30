@@ -65,6 +65,11 @@ cat $url/recon/fsubs.txt | httpx --silent | tee $url/recon/livesubs.txt
 echo "[+]Testing For SubTakeOver"
 subzy --targets  $url/recon/fsubs.txt  --timeout 200  --hide_fails >> $url/recon/subtake.txt
 #--------------------------------------------------------------------------------------------------
+#-------------------------------Checking For Open Ports------------------------------------
+#--------------------------------------------------------------------------------------------------
+echo "[+] Scanning for open ports..."
+nmap -iL $url/recon/livesubs.txt -T4 -oA $url/recon/openports.txt
+#--------------------------------------------------------------------------------------------------
 #-----------------------------------Enumurating Parameters-----------------------------------------
 #--------------------------------------------------------------------------------------------------
 echo "[+]Enumurating Params From Paramspider...."
