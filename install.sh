@@ -50,7 +50,9 @@ echo "[+] Installing SubFinder......."
 go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
 cp /root/go/bin/subfinder /usr/local/bin/
 echo "[+] Installing Findomain........"
-
+wget https://github.com/findomain/findomain/releases/latest/download/findomain-linux
+mv findomain-linux findomain
+cp findomain /usr/local/bin
 echo "[+] Installing Amass......."
 go install -v github.com/OWASP/Amass/v3/...@master
 cp /root/go/bin/amass /usr/local/bin/
@@ -66,10 +68,10 @@ go install github.com/tomnomnom/waybackurls@latest
 cp /root/go/bin/waybackurls /usr/local/bin/
 echo "[+] Installing gau - Get All Urls"
 go install github.com/lc/gau/v2/cmd/gau@latest
-cp /root/go/bin/waybackurls /usr/local/bin/
+cp /root/go/bin/gau /usr/local/bin/
 echo "[+] Installing gauplus........"
 go install github.com/bp0lr/gauplus@latest
-cp /root/go/bin/waybackurls /usr/local/bin/
+cp /root/go/bin/gauplus /usr/local/bin/
 echo "[+] Installing Paramspider......"
 git clone https://github.com/devanshbatham/ParamSpider.git
 mv ParamSpider /opt/
@@ -79,12 +81,12 @@ pip3 install -r /opt/ParamSpider/requirements.txt
 #---------------------------------------------------------------------------------------------------------------------
 echo "Installing httpx........"
 go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
+cp /root/go/bin/httpx /usr/local/bin/
 #---------------------------------------------------------------------------------------------------------------------
 #------------------------------------------Installing Screenshoters---------------------------------------------------
 #---------------------------------------------------------------------------------------------------------------------
 
-echo "Installing qsreplace....."
-go install github.com/tomnomnom/qsreplace@latest
+
 #---------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------Installing Sql Map---------------------------------------------------
 #---------------------------------------------------------------------------------------------------------------------
@@ -95,9 +97,9 @@ mv sqlmapproject-sqlmap-c722f8e /opt/Sqlmap
 #---------------------------------------------------------------------------------------------------------------------
 #------------------------------------------Installing Usefull Tools---------------------------------------------------
 #---------------------------------------------------------------------------------------------------------------------
-
-
-
+echo "Installing qsreplace....."
+go install github.com/tomnomnom/qsreplace@latest
+cp /root/go/bin/qsreplace /usr/local/bin/
 
 
 
