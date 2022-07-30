@@ -1,5 +1,5 @@
 #! /bin/bash 
-
+sudo apt install lolcat -y
 echo "Installing Requirements........" | lolcat
 sudo apt update -y
 sudo apt upgrade -y
@@ -21,17 +21,16 @@ sudo apt-get install build-essential libssl-dev libffi-dev python-dev -y
 sudo apt-get install python-setuptools -y
 sudo apt-get install libldns-dev -y
 sudo apt-get install python-dnspython -y 
-sudo apt-get install git -y
 sudo apt-get install rename -y
 sudo apt-get install xargs -y
 sudo apt install -y awscli -y
 sudo apt-get install nmap -y
-
 #---------------------------------------------------------------------------------------------------------------------
 #--------------------------------------Installing Go-Lang-------------------------------------------------------------
 #---------------------------------------------------------------------------------------------------------------------
 echo "[+] Installing Go-Lang....."
 wget https://go.dev/dl/go1.18.4.linux-amd64.tar.gz
+cp go1.18.4.linux-amd64.tar.gz /root/
 rm -rf /usr/local/go && tar -C /usr/local -xzf go1.18.4.linux-amd64.tar.gz
 export PATH=$PATH:/usr/local/go/bin
 go version
