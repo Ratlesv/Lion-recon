@@ -56,15 +56,17 @@ rm $url/recon/final.txt
 echo "[+]Total Unique SubDomains"
 cat $url/recon/fsubs.txt | wc -l
 #--------------------------------------------------------------------------------------------------
+#-----------------------------------Filtering Live SubDomains--------------------------------------
+#--------------------------------------------------------------------------------------------------
+cat $url/recon/fsubs.txt | httpx --silent | tee $url/recon/livesubs.txt
+#--------------------------------------------------------------------------------------------------
 #-------------------------------Checking For SubDomain TakeOver------------------------------------
 #--------------------------------------------------------------------------------------------------
 echo "[+]Testing For SubTakeOver"
-subzy --targets  $url/recon/fsubs.txt  --timeout 200  --hide_fails > $url/recon/subtake.txt
+subzy --targets  $url/recon/fsubs.txt  --timeout 200  --hide_fails >> $url/recon/subtake.txt
 #--------------------------------------------------------------------------------------------------
 #-----------------------------------Enumurating Parameters-----------------------------------------
 #--------------------------------------------------------------------------------------------------
-
-
 echo "[+]Enumurating Params From Paramspider...."
 python3 /opt/ParamSpider/paramspider.py --level high -d $url -p noor -o $1/recon/params.txt
 echo "[+]Enumurating Params From Waybackurls...."
