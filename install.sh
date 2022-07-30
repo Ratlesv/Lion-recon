@@ -65,7 +65,7 @@ pip3 install -r /opt/Sublist3r/requirements.txt
 #------------------------------------------Installing ScreenShoters---------------------------------------------------
 #---------------------------------------------------------------------------------------------------------------------
 git clone https://github.com/FortyNorthSecurity/EyeWitness.git
-cp EyeWitness /opt/
+cp -r EyeWitness /opt/
 sudo /opt/EyeWitness/Python/setup/setup.sh
 #---------------------------------------------------------------------------------------------------------------------
 #------------------------------------------Installing Url Crawlers ---------------------------------------------------
