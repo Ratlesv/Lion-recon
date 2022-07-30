@@ -1,4 +1,5 @@
 #! /bin/bash 
+speedtest
 sudo apt install lolcat -y
 echo "Installing Requirements........" | lolcat
 sudo apt update -y
@@ -60,6 +61,12 @@ echo "[+] Installing SubList3r........."
 git clone https://github.com/aboul3la/Sublist3r.git 
 mv Sublist3r /opt/
 pip3 install -r /opt/Sublist3r/requirements.txt
+#---------------------------------------------------------------------------------------------------------------------
+#------------------------------------------Installing ScreenShoters---------------------------------------------------
+#---------------------------------------------------------------------------------------------------------------------
+git clone https://github.com/FortyNorthSecurity/EyeWitness.git
+cp EyeWitness /opt/
+sudo /opt/EyeWitness/Python/setup/setup.sh
 #---------------------------------------------------------------------------------------------------------------------
 #------------------------------------------Installing Url Crawlers ---------------------------------------------------
 #---------------------------------------------------------------------------------------------------------------------
