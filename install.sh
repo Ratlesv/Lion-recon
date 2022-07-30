@@ -45,13 +45,15 @@ go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest
 #---------------------------------------------------------------------------------------------------------------------
 echo "[+] Installing Assestfinder..."
 go install github.com/tomnomnom/assetfinder@latest
+cp /root/go/bin/assetfinder /usr/local/bin
 echo "[+] Installing SubFinder......."
 go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
+cp /root/go/bin/subfinder /usr/local/bin/
 echo "[+] Installing Findomain........"
 
 echo "[+] Installing Amass......."
 go install -v github.com/OWASP/Amass/v3/...@master
-
+cp /root/go/bin/amass /usr/local/bin/
 echo "[+] Installing SubList3r........."
 git clone https://github.com/aboul3la/Sublist3r.git 
 mv Sublist3r /opt/
