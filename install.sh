@@ -80,9 +80,9 @@ echo "[+] Installing gauplus........"
 go install github.com/bp0lr/gauplus@latest
 cp /root/go/bin/gauplus /usr/local/bin/
 echo "[+] Installing Paramspider......"
-git clone https://github.com/devanshbatham/ParamSpider.git
-mv ParamSpider /opt/
-pip3 install -r /opt/ParamSpider/requirements.txt
+git clone https://github.com/devanshbatham/Paramspider.git
+mv Paramspider /opt/
+pip3 install -r /opt/Paramspider/requirements.txt
 #---------------------------------------------------------------------------------------------------------------------
 #--------------------------------------Installing Subs Live Checker---------------------------------------------------
 #---------------------------------------------------------------------------------------------------------------------
