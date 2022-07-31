@@ -33,5 +33,18 @@ Scanning for open ports
 github recon
 nikto
 Fetching .xlxs .pdf etc,.
+-------------------------------------------------------------------------------------------------------------
+Analyze ScreenShots 
+Authecation Bypass
+CoRS on Profile Page
+EXIF data info on profile pic
+test for file upload vulnerabilities
+google dorking through ( bug bounty helper )
+------------------------------------------------------------------------------------------------------------------
+1. Reflected Xss ----> HTML Injection (Sometimes Sql Injection Possible)
+2. Sql injection ----> RCE ( --os-shell || --sql-shell )
+3. eSSRF --------> RXss ( =https://srsecure.xyz/ssrf.html )&& internal SSRF ( Try To Exploit Normally )
+4. Open Redirect ---------> RXSS ( =javascript:alert(1) )
+5. Local File Inclusion --------> RCE ( uploading evil file in browser agent )
 
 
