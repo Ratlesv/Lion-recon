@@ -107,6 +107,12 @@ mv sqlmapproject-sqlmap-c722f8e /opt/Sqlmap
 echo "Installing qsreplace....."
 go install github.com/tomnomnom/qsreplace@latest
 cp /root/go/bin/qsreplace /usr/local/bin/
+echo "[+] Installing ffuf"
+go install github.com/ffuf/ffuf@latest
+cp /root/go/bin/ffuf /usr/local/bin/
+echo "[+] Installing gf Patterns"
+go install github.com/tomnomnom/gf@latest
+cp /root/go/bin/gf /usr/local/bin/
 
 
 
