@@ -114,11 +114,11 @@ cat $url/recon/fsubs.txt | while read host do ; do curl -I -L --silent --path-as
 #------------------------------------------------------------------------------------------------------------
 #----------------------------------------------Checking For CORS---------------------------------------------
 #------------------------------------------------------------------------------------------------------------
-cat $url/recon/fsubs.txt | while read host do ; do curl $host --silent --path-as-is --insecure -L -I -H Origin:beebom.com | grep "beebom.com" && echo "$host" ; done
+cat $url/recon/fsubs.txt | while read host do ; do curl $host --silent --path-as-is --insecure -L -I -H Origin:beebom.com | grep "beebom.com" && echo "$host" ; done >> $url/recon/cors.txt
 #------------------------------------------------------------------------------------------------------------
 #--------------------------------------Checking For XSS through Referer Header-------------------------------
 #------------------------------------------------------------------------------------------------------------
-cat $url/recon/fsubs.txt | while read host do ; do curl $host --silent --path-as-is --insecure -L -I -H Referer:https://beebom.com/ | grep "beebom.com" && echo "$host" ; done 
+cat $url/recon/fsubs.txt | while read host do ; do curl $host --silent --path-as-is --insecure -L -I -H Referer:https://beebom.com/ | grep "beebom.com" && echo "$host" ; done >> $url/recon/xssrefer.txt
 #------------------------------------------------------------------------------------------------------------
 #---------------------------------Checking For Open redirects through X-Forwarded Header---------------------
 #------------------------------------------------------------------------------------------------------------
