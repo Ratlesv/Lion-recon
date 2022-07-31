@@ -20,7 +20,7 @@ A Simple Bash Script Which Automate Web Application PenTesting.
 ```
 git clone https://github.com/noor-sec/TheLionRecon
 cd TheLionRecon
-chomd 777 install.sh
+chmod 777 install.sh
 ./install.sh
 chmod 777 lion
 ```
