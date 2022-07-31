@@ -1,0 +1,37 @@
+# First Run Porxy Chains
+Enumurating Subdomains
+Filtering LiveSubDomains
+ScreenShoting Live SubDomains
+Enumurating Urls & Parameters
+
+#Finding Vuln's Using Subs
+Checking for OpenPorts
+SubDomain TakeOver
+Nuclei Cves
+Referer --> Xss
+Referer --> Open Redirect
+Dirbuster
+Clickjacking
+CORS
+Broken Link Hijacking
+
+#Finding Vuln's Using Parameters ( using gfplus )
+Xss + Htmli
+eSSRF
+Local File Inclusion
+Open Redirects
+Sql Injection
+Command Injection 
+XXE Injection 
+CRLF Injection
+
+#Recon
+whois
+Headers Curl
+Waf 
+Scanning for open ports
+github recon
+nikto
+Fetching .xlxs .pdf etc,.
+
+
