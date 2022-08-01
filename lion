@@ -135,6 +135,14 @@ cat $url/recon/live_subs.txt | while read host do ; do curl $host --silent --pat
 echo "[+]Checking For Xss in Referer Header...." | lolcat
 cat $url/recon/live_subs.txt | while read host do ; do curl $host --silent --path-as-is --insecure -L -I -H Referer:https://beebom.com/ | grep "beebom.com" && echo "$host" ; done >> $url/subs_vuln/xss_refer.txt
 #--------------------------------------------------------------------------------------------------
+#-------------------------------------Full Scan With Nuclei----------------------------------------
+#--------------------------------------------------------------------------------------------------
+echo "[+] Full Scan With Nuclei" | lolcat
+cat cat $url/recon/live_subs.txt | nuclei -t nu
+
+
+
+#--------------------------------------------------------------------------------------------------
 #---------------------------Checking For Sql Injection Vulnerability-------------------------------
 #--------------------------------------------------------------------------------------------------
 echo "[+]Testing For Sqli" | lolcat
