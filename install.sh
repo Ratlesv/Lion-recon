@@ -120,6 +120,10 @@ echo "[+] Installing Dalfox..." | lolcat
 go install github.com/hahwul/dalfox/v2@latest
 cp /root/go/bin/dalfox /usr/local/bin/
 
+go install github.com/KathanP19/Gxss@latest
+
+go install github.com/Emoe/kxss@latest
+
 
 
 
