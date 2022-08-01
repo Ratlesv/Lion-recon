@@ -138,7 +138,7 @@ cat $url/recon/live_subs.txt | while read host do ; do curl $host --silent --pat
 #-------------------------------------Full Scan With Nuclei----------------------------------------
 #--------------------------------------------------------------------------------------------------
 echo "[+] Full Scan With Nuclei" | lolcat
-cat cat $url/recon/live_subs.txt | nuclei -t nu
+cat $url/recon/live_subs.txt | nuclei -t /root/nuclei-templates/ >> $url/recon/nuclei.txt
 
 
 
