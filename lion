@@ -1,6 +1,9 @@
 #! /bin/bash 
 url=$1
 
+figlet "TheLionRecon" | lolcat
+echo "                 @Abbas Cyber Security    " | lolcat
+
 if [ ! -d "$url" ]; then
       mkdir $url
 fi
@@ -29,8 +32,7 @@ fi
 #---------------------------------------------------------------------------------
 #-----------------------------Finding SubDomains----------------------------------
 #----------------------------------------------------------------------------------
-figlet "TheLionRecon" | lolcat
-echo "                 @Abbas Cyber Security    " | lolcat
+
 echo "[+]Enumurating SubDomains Using Assetfinder..."
 assetfinder $url >> $url/recon/assets.txt
 cat $url/recon/assets.txt | grep $url >> $url/recon/final.txt
