@@ -53,6 +53,7 @@ cp /root/go/bin/subfinder /usr/local/bin/
 echo "[+] Installing Findomain........"
 wget https://github.com/findomain/findomain/releases/latest/download/findomain-linux
 mv findomain-linux findomain
+chmod 777 findomain
 cp findomain /usr/local/bin
 echo "[+] Installing Amass......."
 go install -v github.com/OWASP/Amass/v3/...@master
