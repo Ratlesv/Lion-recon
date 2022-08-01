@@ -11,8 +11,8 @@ if [ ! -d "$url/recon" ]; then
       mkdir $url/recon
 fi
 
-if [ ! -d "$url/param_vuln" ]; then
-          mkdir $url/param_vuln
+if [ ! -d "$url/params_vuln" ]; then
+          mkdir $url/params_vuln
 fi
 
 if [ ! -d "$url/subs_vuln" ]; then
@@ -23,8 +23,8 @@ if [ ! -d "$url/subs_vuln/false_positive" ]; then
           mkdir $url/subs_vuln/false_positive
 fi
 
-if [ ! -d "$url/param_vuln/false_positive" ]; then
-          mkdir $url/param_vuln/false_positive
+if [ ! -d "$url/params_vuln/false_positive" ]; then
+          mkdir $url/params_vuln/false_positive
 fi
 
 
@@ -107,7 +107,7 @@ cat $url/recon/final_params.txt | wc -l
 #-------------------------------Checking For Open Redirects----------------------------------------
 #--------------------------------------------------------------------------------------------------
 echo "[+]Testing For Openredirects"
-cat $url/recon/final_params.txt | qsreplace 'http://evil.com' | while read host do ; do curl -s -L $host -I | grep "evil.com" && echo "$host" ;done >> $url/recon/open_redirect.txt
+cat $url/recon/final_params.txt | qsreplace 'http://evil.com' | while read host do ; do curl -s -L $host -I | grep "evil.com" && echo "$host" ;done >> $url/params_vuln/open_redirect.txt
 #--------------------------------------------------------------------------------------------------
 #-----------------------------------Checking For SSRF----------------------------------------------
 #--------------------------------------------------------------------------------------------------
