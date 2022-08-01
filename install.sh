@@ -39,6 +39,7 @@ go version
 #---------------------------------------------------------------------------------------------------------------------
 #--------------------------------------Installing Nuclei--------------------------------------------------------------
 #---------------------------------------------------------------------------------------------------------------------
+echo "[+] Installing Nuclei....." | lolcat
 go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest | lolcat
 cp /root/go/bin/nuclei /usr/local/bin/
 nuclei
@@ -66,6 +67,7 @@ pip3 install -r /opt/Sublist3r/requirements.txt
 #---------------------------------------------------------------------------------------------------------------------
 #------------------------------------------Installing ScreenShoters---------------------------------------------------
 #---------------------------------------------------------------------------------------------------------------------
+echo "[+] Installing EyeWitness....." | lolcat
 git clone https://github.com/FortyNorthSecurity/EyeWitness.git
 cp -r EyeWitness /opt/
 sudo /opt/EyeWitness/Python/setup/setup.sh
@@ -119,12 +121,12 @@ cp /root/go/bin/gf /usr/local/bin/
 echo "[+] Installing Dalfox..." | lolcat
 go install github.com/hahwul/dalfox/v2@latest
 cp /root/go/bin/dalfox /usr/local/bin/
-
+echo "[+] Installing Gxss....." | lolcat
 go install github.com/KathanP19/Gxss@latest
-
+cp /root/go/bin/dalfox /usr/local/bin/
+echo "[+] Installing kxss....." | lolcat
 go install github.com/Emoe/kxss@latest
-
-
+cp /root/go/bin/dalfox /usr/local/bin/
 
 
 
