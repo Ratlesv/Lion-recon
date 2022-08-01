@@ -1,6 +1,13 @@
 # TheLionRecon 
 
 A Simple Bash Script Which Automate Web Application PenTesting.
+### This Tool Covers
++ Reflected Xss
++ HTML Injection
++ External SSRF
++ Open Redirects
++ Sql Injection
+
 ### Run 
 ```./lion example.com```
 ### Tools Included
