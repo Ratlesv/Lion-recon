@@ -102,7 +102,7 @@ cat $url/recon/fparams.txt | qsreplace 'http://evil.com' | while read host do ; 
 #---------------------------Checking For Sql Injection Vulnerability-------------------------------
 #--------------------------------------------------------------------------------------------------
 echo "[+]Testing For Sqli"
-cat $url/recon/fparams.txt | python3 /opt/Sqlmap/sqlmap.py 
+cat $url/recon/fparams.txt | python3 /opt/sqlmap/sqlmap.py 
 #--------------------------------------------------------------------------------------------------
 #-----------------------------------Checking For SSRF----------------------------------------------
 #--------------------------------------------------------------------------------------------------
