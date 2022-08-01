@@ -16,13 +16,6 @@ if [ ! -d "$url/subs_vuln" ]; then
           mkdir $url/subs_vuln
 fi
 
-if [ ! -f "$url/recon/final.txt" ]; then
-          touch $url/recon/final.txt
-fi
-
-if [ ! -f "$url/recon/finalsubs.txt" ]; then
-          touch $url/recon/finalsubs.txt
-fi
 
 
 #---------------------------------------------------------------------------------
@@ -45,15 +38,15 @@ findomain -t $url -q >> $url/recon/fin.txt
 cat $url/recon/fin.txt | grep $url >> $url/recon/final.txt
 rm $url/recon/fin.txt
 
-echo "[+]Enumurating SubDomains Using Sublist3r..."
-python3 /opt/Sublist3r/sublist3r.py -d $url -o $1/recon/list3r.txt
-cat $url/recon/list3r.txt | grep $url >> $url/recon/final.txt
-rm $1/recon/list3r.txt 
-
 echo "[+]Enumurating SubDomains Using Amass..."
 amass enum -d $url >> $url/recon/amass.txt
 cat $url/recon/amass.txt | grep $url >> $url/recon/final.txt
 rm $url/recon/amass.txt
+
+echo "[+]Enumurating SubDomains Using Sublist3r..."
+python3 /opt/Sublist3r/sublist3r.py -d $url -o $1/recon/list3r.txt
+cat $url/recon/list3r.txt | grep $url >> $url/recon/final.txt
+rm $1/recon/list3r.txt 
 
 echo "[+]Filtering Repeated Domains........."
 cat $url/recon/final.txt | sort -u | tee $url/recon/final_subs.txt 
