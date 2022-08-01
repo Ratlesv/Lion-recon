@@ -8,6 +8,14 @@ if [ ! -d "$url/recon" ]; then
       mkdir $url/recon
 fi
 
+if [ ! -d "$url/param_vuln" ]; then
+          mkdir $url/param_vuln
+fi
+
+if [ ! -d "$url/subs_vuln" ]; then
+          mkdir $url/subs_vuln
+fi
+
 if [ ! -f "$url/recon/final.txt" ]; then
           touch $url/recon/final.txt
 fi
@@ -16,9 +24,7 @@ if [ ! -f "$url/recon/finalsubs.txt" ]; then
           touch $url/recon/finalsubs.txt
 fi
 
-if [ ! -d "$url/recon/xss" ]; then
-          mkdir $url/recon/dq
-fi
+
 #---------------------------------------------------------------------------------
 #-----------------------------Finding SubDomains----------------------------------
 #----------------------------------------------------------------------------------
@@ -50,20 +56,20 @@ cat $url/recon/amass.txt | grep $url >> $url/recon/final.txt
 rm $url/recon/amass.txt
 
 echo "[+]Filtering Repeated Domains........."
-cat $url/recon/final.txt | sort -u | tee $url/recon/fsubs.txt 
+cat $url/recon/final.txt | sort -u | tee $url/recon/final_subs.txt 
 rm $url/recon/final.txt 
 
 echo "[+]Total Unique SubDomains"
-cat $url/recon/fsubs.txt | wc -l
+cat $url/recon/final_subs.txt | wc -l
 #--------------------------------------------------------------------------------------------------
 #-----------------------------------Filtering Live SubDomains--------------------------------------
 #--------------------------------------------------------------------------------------------------
-cat $url/recon/fsubs.txt | httpx --silent | tee $url/recon/livesubs.txt
+cat $url/recon/fsubs.txt | httpx --silent | tee $url/recon/live_subs.txt
 #--------------------------------------------------------------------------------------------------
 #-------------------------------Checking For SubDomain TakeOver------------------------------------
 #--------------------------------------------------------------------------------------------------
 echo "[+]Testing For SubTakeOver"
-subzy --targets  $url/recon/fsubs.txt  --timeout 200  --hide_fails >> $url/recon/subtake.txt
+subzy --targets  $url/recon/final_subs.txt  --timeout 200  --hide_fails >> $url/subs_vuln/sub_take_over.txt
 #--------------------------------------------------------------------------------------------------
 #-------------------------------Checking For Open Ports------------------------------------
 #--------------------------------------------------------------------------------------------------
