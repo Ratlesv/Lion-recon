@@ -100,21 +100,24 @@ cp /root/go/bin/subzy /usr/local/bin/
 #---------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------Installing Sql Map---------------------------------------------------
 #---------------------------------------------------------------------------------------------------------------------
-echo "Installing Sqlmap......"
+echo "Installing Sqlmap......" |lolcat
 git clone --depth 1 https://github.com/sqlmapproject/sqlmap.git sqlmap
 mv sqlmap /opt/
 #---------------------------------------------------------------------------------------------------------------------
 #------------------------------------------Installing Usefull Tools---------------------------------------------------
 #---------------------------------------------------------------------------------------------------------------------
-echo "Installing qsreplace....."
+echo "Installing qsreplace....." | lolcat
 go install github.com/tomnomnom/qsreplace@latest
 cp /root/go/bin/qsreplace /usr/local/bin/
-echo "[+] Installing ffuf"
+echo "[+] Installing ffuf" | lolcat
 go install github.com/ffuf/ffuf@latest
 cp /root/go/bin/ffuf /usr/local/bin/
-echo "[+] Installing gf Patterns"
+echo "[+] Installing gf Patterns" | lolcat
 go install github.com/tomnomnom/gf@latest
 cp /root/go/bin/gf /usr/local/bin/
+echo "[+] Installing Dalfox..." | lolcat
+go install github.com/hahwul/dalfox/v2@latest
+cp /root/go/bin/dalfox /usr/local/bin/
 
 
 
