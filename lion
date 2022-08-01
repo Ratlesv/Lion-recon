@@ -16,6 +16,14 @@ if [ ! -d "$url/subs_vuln" ]; then
           mkdir $url/subs_vuln
 fi
 
+if [ ! -d "$url/subs_vuln/false_positive" ]; then
+          mkdir $url/subs_vuln/false_positive
+fi
+
+if [ ! -d "$url/param_vuln/false_positive" ]; then
+          mkdir $url/param_vuln/false_positive
+fi
+
 
 
 #---------------------------------------------------------------------------------
