@@ -67,7 +67,7 @@ cat $url/recon/final_subs.txt | wc -l
 #--------------------------------------------------------------------------------------------------
 #-----------------------------------Filtering Live SubDomains--------------------------------------
 #--------------------------------------------------------------------------------------------------
-echo "[]"
+echo "[+]Removing Dead Domains....."
 cat $url/recon/final_subs.txt | httpx --silent >> $url/recon/live_subs.txt
 #------------------------------------------------------------------------------------------------------------
 #--------------------------------------Taking LiveSubs ScreenShots-------------------------------------------
@@ -88,7 +88,7 @@ subzy --targets  $url/recon/final_subs.txt  --timeout 200  --hide_fails >> $url/
 #-----------------------------------Enumurating Parameters-----------------------------------------
 #--------------------------------------------------------------------------------------------------
 echo "[+]Enumurating Params From Paramspider...."
-python3 /opt/ParamSpider/paramspider.py --level high -d $url -p noor -o $1/recon/params.txt
+python3 /opt/Paramspider/paramspider.py --level high -d $url -p noor -o $1/recon/params.txt
 echo "[+]Enumurating Params From Waybackurls...."
 cat $1/recon/fsubs.txt | waybackurls | grep = | qsreplace noor >> $url/recon/params.txt
 echo "[+]Enumurating Params From gau Tool...."
@@ -97,12 +97,12 @@ echo "[+]Enumurating Params From gauPlus Tool...."
 cat $url/recon/fsubs.txt | gauplus | grep = | qsreplace noor >> $url/recon/params.txt
 
 echo "[+]Filtering Dups..."
-cat $url/recon/params.txt | sort -u | tee $url/recon/fparams.txt 
+cat $url/recon/params.txt | sort -u | tee $url/recon/final_params.txt 
 
 rm $url/recon/params.txt
 
 echo "[+]Total Unique Params Found"
-cat $url/recon/fparams.txt | wc -l
+cat $url/recon/final_params.txt | wc -l
 #--------------------------------------------------------------------------------------------------
 #-------------------------------Checking For Open Redirects----------------------------------------
 #--------------------------------------------------------------------------------------------------
