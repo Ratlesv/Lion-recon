@@ -107,7 +107,7 @@ echo "Installing Sqlmap......" |lolcat
 git clone --depth 1 https://github.com/sqlmapproject/sqlmap.git sqlmap
 mv sqlmap /opt/
 #---------------------------------------------------------------------------------------------------------------------
-#------------------------------------------------Installing Sql Map---------------------------------------------------
+#-----------------------------------------------Installing CRLF Fuzzer------------------------------------------------
 #---------------------------------------------------------------------------------------------------------------------
 GO111MODULE=on go install github.com/dwisiswant0/crlfuzz/cmd/crlfuzz@latest
 cp /root/go/bin/crlfuzz /usr/local/bin/
