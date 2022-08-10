@@ -90,9 +90,13 @@ pip3 install -r /opt/Paramspider/requirements.txt
 #---------------------------------------------------------------------------------------------------------------------
 #--------------------------------------Installing Subs Live Checker---------------------------------------------------
 #---------------------------------------------------------------------------------------------------------------------
-echo "Installing httpx........" | lolcat
+echo "[+]Installing httpx........" | lolcat
 go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
 cp /root/go/bin/httpx /usr/local/bin/
+echo "[+]Installing httprobe......" | lolcat
+go install github.com/tomnomnom/httprobe@latest 
+cp /root/go/bin/httprobe /usr/local/bin/
+
 #---------------------------------------------------------------------------------------------------------------------
 #-----------------------------------------Installing SubTakeOver Checkers---------------------------------------------
 #---------------------------------------------------------------------------------------------------------------------
