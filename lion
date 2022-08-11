@@ -74,7 +74,7 @@ echo "[+]Removing Dead Domains Using httprobe....." | lolcat
 cat $url/recon/final_subs.txt | httprobe >> $url/recon/live_check.txt
 
 echo "[+]Analyzing Both httpx & httprobe....."
-cat $url/recon/final.txt | sort -u | tee $url/recon/live_subs.txt 
+cat $url/recon/live_check.txt | sort -u | tee $url/recon/live_subs.txt 
 
 echo "[+]Total Unique Live SubDomains....."
 cat $url/recon/live_subs.txt | wc -l
