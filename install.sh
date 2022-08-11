@@ -71,6 +71,11 @@ echo "[+] Installing EyeWitness....." | lolcat
 git clone https://github.com/FortyNorthSecurity/EyeWitness.git
 cp -r EyeWitness /opt/
 sudo /opt/EyeWitness/Python/setup/setup.sh
+
+echo "[+] Installing GoWitness....." | lolcat
+go install github.com/sensepost/gowitness@latest
+cp /root/go/bin/gowitness /usr/local/bin/
+
 #---------------------------------------------------------------------------------------------------------------------
 #------------------------------------------Installing Url Crawlers ---------------------------------------------------
 #---------------------------------------------------------------------------------------------------------------------
