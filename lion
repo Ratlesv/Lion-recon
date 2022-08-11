@@ -27,6 +27,10 @@ if [ ! -d "$url/params_vuln/false_positive" ]; then
           mkdir $url/params_vuln/false_positive
 fi
 
+if [ ! -d "$url/recon/EyeWitness" ]; then
+      mkdir $url/recon/EyeWitness
+fi
+
 
 
 #---------------------------------------------------------------------------------
@@ -82,7 +86,7 @@ cat $url/recon/live_subs.txt | wc -l
 #------------------------------------------------------------------------------------------------------------
 #--------------------------------------Taking LiveSubs ScreenShots-------------------------------------------
 #------------------------------------------------------------------------------------------------------------
-#/opt/EyeWitness/Python/EyeWitness.py -f $url/recon/livesubs.txt
+python3 /opt/EyeWitness/Python/EyeWitness.py -f $url/recon/livesubs.txt --no-prompt -d $url/recon/EyeWitness --timeout 240
 
 #--------------------------------------------------------------------------------------------------
 #-------------------------------Checking For SubDomain TakeOver------------------------------------
