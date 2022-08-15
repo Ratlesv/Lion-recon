@@ -36,6 +36,10 @@ fi
 #---------------------------------------------------------------------------------
 #-----------------------------Finding SubDomains----------------------------------
 #----------------------------------------------------------------------------------
+echo "[+]Enumurating SubDomains Using Amass..." | lolcat
+amass enum -d $url >> $url/recon/amass.txt
+cat $url/recon/amass.txt | grep $url >> $url/recon/final.txt
+rm $url/recon/amass.txt
 
 echo "[+]Enumurating SubDomains Using Assetfinder..." | lolcat
 assetfinder $url >> $url/recon/assetfinder.txt
@@ -51,11 +55,6 @@ echo "[+]Enumurating SubDomains Using Findomain..." | lolcat
 findomain -t $url -q >> $url/recon/findomain.txt
 cat $url/recon/findomain.txt | grep $url >> $url/recon/final.txt
 rm $url/recon/findomain.txt
-
-echo "[+]Enumurating SubDomains Using Amass..." | lolcat
-amass enum -d $url >> $url/recon/amass.txt
-cat $url/recon/amass.txt | grep $url >> $url/recon/final.txt
-rm $url/recon/amass.txt
 
 echo "[+]Enumurating SubDomains Using Sublist3r..." | lolcat
 python3 /opt/Sublist3r/sublist3r.py -d $url -o $1/recon/sublist3r.txt
@@ -86,7 +85,8 @@ cat $url/recon/live_subs.txt | wc -l
 #------------------------------------------------------------------------------------------------------------
 #--------------------------------------Taking LiveSubs ScreenShots-------------------------------------------
 #------------------------------------------------------------------------------------------------------------
-python3 /opt/EyeWitness/Python/EyeWitness.py -f $url/recon/livesubs.txt --no-prompt -d $url/recon/EyeWitness --timeout 240
+echo "[+]Taking ScreenShots For Live Websites..." | lolcat
+python3 /opt/EyeWitness/Python/EyeWitness.py -f $1/recon/livesubs.txt --no-prompt -d $1/recon/EyeWitness --timeout 240
 
 #--------------------------------------------------------------------------------------------------
 #-------------------------------Checking For SubDomain TakeOver------------------------------------
