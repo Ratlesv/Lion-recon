@@ -11,8 +11,16 @@ Which Automates Recon. And Find Common Vulnerabilities.
 + Open Redirects
 + Sql Injection
 
-### Run 
-```./lion example.com```
+### Installation
+```
+git clone https://github.com/noor-sec/TheLionRecon
+cd TheLionRecon
+chmod 777 install.sh
+./install.sh
+chmod 777 lion
+```
+
+
 ### Tools Included
 + Assetfinder
 + SubFinder
@@ -26,14 +34,7 @@ Which Automates Recon. And Find Common Vulnerabilities.
 + ParamSpider
 + qsreplace
 + Sqlmap
-### Installation
-```
-git clone https://github.com/noor-sec/TheLionRecon
-cd TheLionRecon
-chmod 777 install.sh
-./install.sh
-chmod 777 lion
-```
+
 
 
 
