@@ -5,23 +5,29 @@ I Hope You Are Doing Great.
 TheLionRecon is a Simple Bash Script. Combination of Tools.
 Which Automates Recon. And Finds Common Vulnerabilities.
 
-### Summary
-## Scanning Domains
+## Summary
+### Scanning Domains
 1. TheLionRecon First Enumurate Subdomains Passive & Active Resources >> $1/recon/final_subs.txt 
 2. Filtering Live SubDomains >> $1/recon/live_subs.txt 
 3. ScreenShoting Live SubDomains >> $1/recon/screenshots/
-5. Checking For Common CVE's >> $1/recon/cves.txt
-6. Scanning With Nikto >> $1/recon/nikto.txt
-7. Whois Info >> $1/recon/whois.txt
-8. Headers Info >> $1/recon/headers.txt
-9. Full Blind Scan With Nucluei >> $1/recon/nuclei.txt
+4. Scanning For WAF >> 
+5. Scanning For Common CVE's >> $1/recon/cves.txt
+6. Finding Built in With 
+7. Scanning With Nikto >> $1/recon/nikto.txt
+8. Whois Info >> $1/recon/whois.txt
+9. Headers Info >> $1/recon/headers.txt
+10. Github Recon >> $1/recon/github.txt
+11. Full Blind Scan With Nucluei >> $1/recon/nuclei.txt
+12. Scanning With Dirbuster $1/recon/dirbuster.txt
+13. Scanning For Clickjacking
 
 10. Scanning For SubDomain TakeOver >> $1/subs_vuln/sub_take_over.txt
-11. Scanning For 
-12. Scanning
-13. Scanning
-14. Scanning
-## Scanning Parameters
+11. Scanning For Broken Links >> 
+12. Scanning For Open Redirect Through Headers >>
+13. Scanning For Reflected Xss Through Headers >>
+14. Scanning For CORS Through Headers >>
+### Scanning Parameters
+
 1. Then Enumurate Urls & Parameters Using Passive & Active Resources >> $1/recon/final_params.txt 
 
 2. Scanning For Open Redirects >> $1/params_vuln/open_redirect.txt
