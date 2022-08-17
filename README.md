@@ -42,7 +42,7 @@ git clone https://github.com/noor-sec/TheLionRecon
 cd TheLionRecon
 chmod 777 install.sh
 ./install.sh
-chmod 777 lion
+chmod 777 lion.sh
 ```
 ### Run
 ```
@@ -67,5 +67,6 @@ chmod 777 lion
 
 
 # Support
+If You Love My Work. Please Support For OSWE
 <a href="https://www.buymeacoffee.com/noornoor" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 
