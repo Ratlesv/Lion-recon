@@ -1,15 +1,40 @@
 # TheLionRecon 
 
 Hello Security Family 💖,
+I Hope You Are Doing Great.
 TheLionRecon is a Simple Bash Script. Combination of Tools.
-Which Automates Recon. And Find Common Vulnerabilities.
+Which Automates Recon. And Finds Common Vulnerabilities.
 
-### This Tool Covers
+### Common Vulnerabilities After Recon
 + Reflected Xss
 + HTML Injection
 + External SSRF
 + Open Redirects
 + Sql Injection
++ Xss Through Header
++ Open Redirect Through Header
++ CORS
++ Clickjacking
++ XXE Injection ( Adding Soon )
++ Command Injection ( Adding Soon )
++ CRLF Injection ( Adding Soon )
++ Local File Inclusion ( Adding Soon )
++ SubDomain TakeOver
++ Broken Link Hijacking ( Adding Soon )
+
+### Recon ( information Gathering )
++ Subdomains ( Active & Passive )
++ Urls & Parameters ( Active & Passive )
++ Filtering Live Domains
++ ScreenShoting Live Domains
++ Open Ports With Nmap
++ Nikto Scan
++ Email Recon
++ Github Recon
++ Whois 
++ 
++ Finally Full Blind Scan With Nuclei
+
 
 ### Installation
 ```
@@ -19,7 +44,10 @@ chmod 777 install.sh
 ./install.sh
 chmod 777 lion
 ```
-
+### Run
+```
+./lion.sh target.com
+```
 
 ### Tools Included
 + Assetfinder
