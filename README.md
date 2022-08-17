@@ -5,7 +5,7 @@ I Hope You Are Doing Great.
 TheLionRecon is a Simple Bash Script. Combination of Tools.
 Which Automates Recon. And Finds Common Vulnerabilities.
 
-### Common Vulnerabilities After Recon
+### Finds Common Vulnerabilities After Recon
 + Reflected Xss
 + HTML Injection
 + External SSRF
