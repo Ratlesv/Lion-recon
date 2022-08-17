@@ -1,16 +1,8 @@
 # TheLionRecon 
 
-A Simple Bash Script Which Automate Web Application PenTesting.
-Adding Soon Below Vulnerabilities:
-1. CRLF Injection
-2. XXE Injection
-3. Broken Link Checker
-4. Local File Inclusion Checker
-5. Screen Shoting Live SubDomains
-6. Command Injection
-7.  
-
-
+Hello Security Family 💖,
+TheLionRecon is a Simple Bash Script. Combination of Tools.
+Which Automates Recon. And Find Common Vulnerabilities.
 
 ### This Tool Covers
 + Reflected Xss
