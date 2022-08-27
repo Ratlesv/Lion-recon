@@ -3,7 +3,7 @@ speedtest
 sudo apt install lolcat -y
 echo "Installing Requirements........" | lolcat
 sudo apt update -y
-sudo apt upgrade -y
+#sudo apt upgrade -y
 sudo apt install python -y
 sudo apt install python2 -y
 sudo apt install python3 -y
@@ -13,19 +13,19 @@ sudo apt install git -y
 sudo apt install php -y
 sudo apt install lolcat -y
 sudo apt install figlet -y
-sudo apt-get install libcurl4-openssl-dev -y 
-sudo apt-get install libssl-dev -y
-sudo apt-get install jq -y
-sudo apt-get install ruby-full -y
-sudo apt-get install libcurl4-openssl-dev libxml2 libxml2-dev libxslt1-dev ruby-dev build-essential libgmp-dev zlib1g-dev -y 
-sudo apt-get install build-essential libssl-dev libffi-dev python-dev -y
-sudo apt-get install python-setuptools -y
-sudo apt-get install libldns-dev -y
-sudo apt-get install python-dnspython -y 
-sudo apt-get install rename -y
-sudo apt-get install xargs -y
-sudo apt install -y awscli -y
-sudo apt-get install nmap -y
+#sudo apt-get install libcurl4-openssl-dev -y 
+#sudo apt-get install libssl-dev -y
+#sudo apt-get install jq -y
+#sudo apt-get install ruby-full -y
+#sudo apt-get install libcurl4-openssl-dev libxml2 libxml2-dev libxslt1-dev ruby-dev build-essential libgmp-dev zlib1g-dev -y 
+#sudo apt-get install build-essential libssl-dev libffi-dev python-dev -y
+#sudo apt-get install python-setuptools -y
+#sudo apt-get install libldns-dev -y
+#sudo apt-get install python-dnspython -y 
+#sudo apt-get install rename -y
+#sudo apt-get install xargs -y
+#sudo apt install -y awscli -y
+#sudo apt-get install nmap -y
 #---------------------------------------------------------------------------------------------------------------------
 #--------------------------------------Installing Go-Lang-------------------------------------------------------------
 #---------------------------------------------------------------------------------------------------------------------
