@@ -92,6 +92,11 @@ echo "[+] Installing Paramspider......" | lolcat
 git clone https://github.com/devanshbatham/Paramspider.git
 mv Paramspider /opt/
 pip3 install -r /opt/Paramspider/requirements.txt
+echo "[+] Installing cariddi...." | lolcat
+git clone https://github.com/edoardottt/cariddi.git; cd cariddi; go get; make linux
+cd ..
+
+
 #---------------------------------------------------------------------------------------------------------------------
 #--------------------------------------Installing Subs Live Checker---------------------------------------------------
 #---------------------------------------------------------------------------------------------------------------------
@@ -143,11 +148,7 @@ echo "[+] Installing kxss....." | lolcat
 go install github.com/Emoe/kxss@latest
 cp /root/go/bin/dalfox /usr/local/bin/
 #----------------------------------------------
-echo "[+] Installing cariddi...." | lolcat
-git clone https://github.com/edoardottt/cariddi.git
-mv cariddi /opt/
-go /opt/cariddi/get
-make /opt/cariddi/linux
+
 echo "[+] Installing cariddi...." | lolcat
 echo "[+] Installing cariddi...." | lolcat
 
