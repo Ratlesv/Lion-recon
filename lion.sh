@@ -85,14 +85,14 @@ cat $url/recon/live_subs.txt | wc -l
 #------------------------------------------------------------------------------------------------------------
 #--------------------------------------Taking LiveSubs ScreenShots-------------------------------------------
 #------------------------------------------------------------------------------------------------------------
-echo "[+]Taking ScreenShots For Live Websites..." | lolcat
-python3 /opt/EyeWitness/Python/EyeWitness.py -f $1/recon/livesubs.txt --no-prompt -d $1/recon/EyeWitness --timeout 240
+#echo "[+]Taking ScreenShots For Live Websites..." | lolcat
+#python3 /opt/EyeWitness/Python/EyeWitness.py -f $1/recon/livesubs.txt --no-prompt -d $1/recon/EyeWitness --timeout 240
 
 #--------------------------------------------------------------------------------------------------
 #-------------------------------Checking For SubDomain TakeOver------------------------------------
 #--------------------------------------------------------------------------------------------------
 echo "[+]Testing For SubTakeOver" | lolcat
-subzy --targets  $url/recon/final_subs.txt  --timeout 200  --hide_fails >> $url/subs_vuln/sub_take_over.txt
+subzy --targets  $url/recon/final_subs.txt  --hide_fails >> $url/subs_vuln/sub_take_over.txt
 #--------------------------------------------------------------------------------------------------
 #-------------------------------Checking For Open Ports------------------------------------
 #--------------------------------------------------------------------------------------------------
@@ -120,14 +120,14 @@ cat $url/recon/final_params.txt | wc -l
 #--------------------------------------------------------------------------------------------------
 #-------------------------------Checking For Open Redirects----------------------------------------
 #--------------------------------------------------------------------------------------------------
-echo "[+]Testing For Openredirects" | lolcat
-cat $url/recon/final_params.txt | qsreplace 'http://evil.com' | while read host do ; do curl -s -L $host -I | grep "evil.com" && echo "$host" ;done >> $url/params_vuln/open_redirect.txt
+#echo "[+]Testing For Openredirects" | lolcat
+#cat $url/recon/final_params.txt | qsreplace 'http://evil.com' | while read host do ; do curl -s -L $host -I | grep "evil.com" && echo "$host" ;done >> $url/params_vuln/open_redirect.txt
 #--------------------------------------------------------------------------------------------------
 #-----------------------------------Checking For SSRF----------------------------------------------
 #--------------------------------------------------------------------------------------------------
-echo "[+]Testing For External SSRF.........." | lolcat
-cat $url/recon/final_params.txt | qsreplace "https://noor.requestcatcher.com/test" | tee $url/recon/ssrftest.txt && cat $url/recon/ssrftest.txt | while read host do ; do curl --silent --path-as-is --insecure "$host" | grep -qs "request caught" && echo "$host \033[0;31mVulnearble\n"; done >> $url/params_vuln/eSSRF.txt
-rm $url/recon/ssrftest.txt
+#echo "[+]Testing For External SSRF.........." | lolcat
+#cat $url/recon/final_params.txt | qsreplace "https://noor.requestcatcher.com/test" | tee $url/recon/ssrftest.txt && cat $url/recon/ssrftest.txt | while read host do ; do curl --silent --path-as-is --insecure "$host" | grep -qs "request caught" && echo "$host \033[0;31mVulnearble\n"; done >> $url/params_vuln/eSSRF.txt
+#rm $url/recon/ssrftest.txt
 #--------------------------------------------------------------------------------------------------
 #-------------------------------Checking For HTMLi && RXSS-----------------------------------------
 #--------------------------------------------------------------------------------------------------
@@ -136,13 +136,13 @@ cat $url/recon/final_params.txt | qsreplace '"><u>hyper</u>' | tee $url/recon/te
 #--------------------------------------------------------------------------------------------------
 #-----------------------------------Checking For Clickjacking--------------------------------------
 #--------------------------------------------------------------------------------------------------
-echo "[+]Checking For Clickjacking...." | lolcat
-cat $url/recon/live_subs.txt | while read host do ; do curl -I -L --silent --path-as-is --insecure "$host" | grep -qs "x-frame-options" && echo "$host \033[0;31mNot\n" || echo  "$host  \033[0;31mVulnerable" ; done | grep Vulnerable >> $url/subs_vuln/false_positive/clickjack.txt
+#echo "[+]Checking For Clickjacking...." | lolcat
+#cat $url/recon/live_subs.txt | while read host do ; do curl -I -L --silent --path-as-is --insecure "$host" | grep -qs "x-frame-options" && echo "$host \033[0;31mNot\n" || echo  "$host  \033[0;31mVulnerable" ; done | grep Vulnerable >> $url/subs_vuln/false_positive/clickjack.txt
 #------------------------------------------------------------------------------------------------------------
 #----------------------------------------------Checking For CORS---------------------------------------------
 #------------------------------------------------------------------------------------------------------------
-echo "[+]Checking For CORS...." | lolcat
-cat $url/recon/live_subs.txt | while read host do ; do curl $host --silent --path-as-is --insecure -L -I -H Origin:beebom.com | grep "beebom.com" && echo "$host" ; done >> $url/subs_vuln/cors.txt
+#echo "[+]Checking For CORS...." | lolcat
+#cat $url/recon/live_subs.txt | while read host do ; do curl $host --silent --path-as-is --insecure -L -I -H Origin:beebom.com | grep "beebom.com" && echo "$host" ; done >> $url/subs_vuln/cors.txt
 #------------------------------------------------------------------------------------------------------------
 #--------------------------------------Checking For XSS through Referer Header-------------------------------
 #------------------------------------------------------------------------------------------------------------
