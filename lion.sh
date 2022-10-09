@@ -140,6 +140,13 @@ cat $url/recon/final_urls.txt | grep = | qsreplace noor >> $url/recon/final_para
 #====================================================================================================
 
 #--------------------------------------------------------------------------------------------------
+#-------------------------------Checking For Open Redirects----------------------------------------
+#--------------------------------------------------------------------------------------------------
+echo "[+]Testing For Openredirects" | lolcat
+python3 /opt/openredirex/openredirex.py -l $url/recon/final_params.txt -p small_open_payloads.txt >> $url/params_vuln/open_redirect.txt
+
+
+#--------------------------------------------------------------------------------------------------
 #-------------------------------Checking For HTMLi Injection---------------------------------------
 #--------------------------------------------------------------------------------------------------
 echo "[+]Testing For HTML Injection...." | lolcat
@@ -153,7 +160,17 @@ dalfox file cat $url/params_vuln/htmli.txt -o $url/params_vuln/xss.txt
 #-------------------------------Checking For Command Injection-----------------------------------------
 #--------------------------------------------------------------------------------------------------
 echo "[+]Testing For Command Injection...." | lolcat
-cat $url/recon/final_params.txt 
+python3 /opt/commix/commix.py -m $url/recon/final_params.txt --batch 
+#--------------------------------------------------------------------------------------------------
+#-------------------------------Checking For CRLF Injection-----------------------------------------
+#--------------------------------------------------------------------------------------------------
+echo "[+]Testing For CRLF Injection...." | lolcat
+crlfuzz -l $url/recon/final_params.txt -o $url/params_vuln/crlf_vuln.txt -s 
+#--------------------------------------------------------------------------------------------------
+#-------------------------------Checking For SQL Injection-----------------------------------------
+#--------------------------------------------------------------------------------------------------
+echo "[+]Testing For SQL Injection...." | lolcat
+cat $url/recon/final_params.txt | python3 /opt/sqlmap/sqlmap.py --level 2 --risk 2
 
 
 
