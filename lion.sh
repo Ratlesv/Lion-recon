@@ -85,8 +85,8 @@ cat $url/recon/live_subs.txt | wc -l
 #------------------------------------------------------------------------------------------------------------
 #--------------------------------------Taking LiveSubs ScreenShots-------------------------------------------
 #------------------------------------------------------------------------------------------------------------
-#echo "[+]Taking ScreenShots For Live Websites..." | lolcat
-#python3 /opt/EyeWitness/Python/EyeWitness.py -f $1/recon/livesubs.txt --no-prompt -d $1/recon/EyeWitness --timeout 240
+echo "[+]Taking ScreenShots For Live Websites..." 
+#python3 /opt/EyeWitness/Python/EyeWitness.py --web -f $url/recon/livesubs.txt --no-prompt -d $1/recon/EyeWitness --resolve --timeout 240
 
 #--------------------------------------------------------------------------------------------------
 #-------------------------------Checking For SubDomain TakeOver------------------------------------
