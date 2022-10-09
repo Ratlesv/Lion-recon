@@ -86,38 +86,47 @@ cat $url/recon/live_subs.txt | wc -l
 #--------------------------------------Taking LiveSubs ScreenShots-------------------------------------------
 #------------------------------------------------------------------------------------------------------------
 echo "[+]Taking ScreenShots For Live Websites..." 
-#python3 /opt/EyeWitness/Python/EyeWitness.py --web -f $url/recon/livesubs.txt --no-prompt -d $1/recon/EyeWitness --resolve --timeout 240
+python3 /opt/EyeWitness/Python/EyeWitness.py --web -f $url/recon/livesubs.txt --no-prompt -d $1/recon/EyeWitness --resolve --timeout 240
 
 #--------------------------------------------------------------------------------------------------
 #-------------------------------Checking For SubDomain TakeOver------------------------------------
 #--------------------------------------------------------------------------------------------------
 echo "[+]Testing For SubTakeOver" | lolcat
 subzy --targets  $url/recon/final_subs.txt  --hide_fails >> $url/subs_vuln/sub_take_over.txt
+
+
 #--------------------------------------------------------------------------------------------------
-#-------------------------------Checking For Open Ports------------------------------------
+#-------------------------------Checking For Open Ports--------------------------------------------
 #--------------------------------------------------------------------------------------------------
 echo "[+] Scanning for open ports..."
 nmap -iL $url/recon/livesubs.txt -T4 -oA $url/recon/openports.txt
 
 #--------------------------------------------------------------------------------------------------
-#-----------------------------------Enumurating Parameters-----------------------------------------
+#-----------------------------------Enumurating Urls-----------------------------------------
 #--------------------------------------------------------------------------------------------------
 echo "[+]Enumurating Params From Paramspider...." | lolcat
-python3 /opt/Paramspider/paramspider.py --level high -d $url -p noor -o $1/recon/params.txt
+python3 /opt/Paramspider/paramspider.py --level high -d $url -p noor -o $1/recon/urls.txt
 echo "[+]Enumurating Params From Waybackurls...." | lolcat
-cat $1/recon/live_subs.txt | waybackurls | grep = | qsreplace noor >> $url/recon/params.txt
+cat $1/recon/live_subs.txt | waybackurls | sort -u >> $url/recon/urls.txt
 echo "[+]Enumurating Params From gau Tool...." | lolcat
-gau --subs  $url | grep = | qsreplace noor >> $url/recon/params.txt 
+gau --subs  $url | sort -u >> $url/recon/urls.txt 
 echo "[+]Enumurating Params From gauPlus Tool...." | lolcat
-cat $url/recon/live_subs.txt | gauplus | grep = | qsreplace noor >> $url/recon/params.txt
+cat $url/recon/live_subs.txt | gauplus | sort -u >> $url/recon/urls.txt
 
 echo "[+]Filtering Dups..." | lolcat
-cat $url/recon/params.txt | sort -u | tee $url/recon/final_params.txt 
+cat $url/recon/params.txt | sort -u | tee $url/recon/final_urls.txt 
 
-rm $url/recon/params.txt
+rm $url/recon/urls.txt
 
 echo "[+]Total Unique Params Found" | lolcat
-cat $url/recon/final_params.txt | wc -l
+cat $url/recon/final_urls.txt | wc -l
+#--------------------------------------------------------------------------------------------------
+#-----------------------------------Enumurating Urls-----------------------------------------------
+#--------------------------------------------------------------------------------------------------
+echo "[+]Filtering Paramas From urls" | lolcat
+cat $url/recon/final_urls.txt | grep = | qsreplace noor >> $url/recon/final_params.txt 
+
+
 #--------------------------------------------------------------------------------------------------
 #-------------------------------Checking For Open Redirects----------------------------------------
 #--------------------------------------------------------------------------------------------------
