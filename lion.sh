@@ -30,7 +30,11 @@ fi
 if [ ! -d "$url/recon/EyeWitness" ]; then
       mkdir $url/recon/EyeWitness
 fi
-
+#--------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
+#-----------------------------------RECON FIRST---------------------------------------------------
+#--------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------
 
 
 #---------------------------------------------------------------------------------
@@ -100,7 +104,11 @@ subzy --targets  $url/recon/final_subs.txt  --hide_fails >> $url/subs_vuln/sub_t
 #--------------------------------------------------------------------------------------------------
 echo "[+] Scanning for open ports..."
 nmap -iL $url/recon/livesubs.txt -T4 -oA $url/recon/openports.txt
-
+#--------------------------------------------------------------------------------------------------
+#-------------------------------------Full Scan With Nuclei----------------------------------------
+#--------------------------------------------------------------------------------------------------
+echo "[+] Full Scan With Nuclei" | lolcat
+cat $url/recon/live_subs.txt | nuclei -t /root/nuclei-templates/ >> $url/recon/nuclei.txt
 #--------------------------------------------------------------------------------------------------
 #-----------------------------------Enumurating Urls-----------------------------------------
 #--------------------------------------------------------------------------------------------------
@@ -121,11 +129,10 @@ rm $url/recon/urls.txt
 echo "[+]Total Unique Params Found" | lolcat
 cat $url/recon/final_urls.txt | wc -l
 #--------------------------------------------------------------------------------------------------
-#-----------------------------------Enumurating Urls-----------------------------------------------
+#-----------------------------------Enumurating Parameters-----------------------------------------
 #--------------------------------------------------------------------------------------------------
 echo "[+]Filtering Paramas From urls" | lolcat
 cat $url/recon/final_urls.txt | grep = | qsreplace noor >> $url/recon/final_params.txt 
-
 
 #====================================================================================================
 #====================================================================================================
@@ -144,8 +151,6 @@ cat $url/recon/final_urls.txt | grep = | qsreplace noor >> $url/recon/final_para
 #--------------------------------------------------------------------------------------------------
 echo "[+]Testing For Openredirects" | lolcat
 python3 /opt/openredirex/openredirex.py -l $url/recon/final_params.txt -p small_open_payloads.txt >> $url/params_vuln/open_redirect.txt
-
-
 #--------------------------------------------------------------------------------------------------
 #-------------------------------Checking For HTMLi Injection---------------------------------------
 #--------------------------------------------------------------------------------------------------
@@ -177,6 +182,7 @@ cat $url/recon/final_params.txt | python3 /opt/sqlmap/sqlmap.py --level 2 --risk
 
 
 
+#---------------------------------------------------------------------------------------------------
 
 #--------------------------------------------------------------------------------------------------
 #-------------------------------Checking For Open Redirects----------------------------------------
@@ -192,8 +198,8 @@ cat $url/recon/final_params.txt | python3 /opt/sqlmap/sqlmap.py --level 2 --risk
 #--------------------------------------------------------------------------------------------------
 #-------------------------------Checking For HTMLi && RXSS-----------------------------------------
 #--------------------------------------------------------------------------------------------------
-echo "[+]Testing For HTML Injection...." | lolcat
-cat $url/recon/final_params.txt | qsreplace '"><u>hyper</u>' | tee $url/recon/temp.txt && cat $url/recon/temp.txt | while read host do ; do curl --silent --path-as-is --insecure "$host" | grep -qs "<u>hyper</u>" && echo "$host \033[0;31mVulnearble\n"; done > $url/params_vuln/htmli.txt
+#echo "[+]Testing For HTML Injection...." | lolcat
+#cat $url/recon/final_params.txt | qsreplace '"><u>hyper</u>' | tee $url/recon/temp.txt && cat $url/recon/temp.txt | while read host do ; do curl --silent --path-as-is --insecure "$host" | grep -qs "<u>hyper</u>" && echo "$host \033[0;31mVulnearble\n"; done > $url/params_vuln/htmli.txt
 #--------------------------------------------------------------------------------------------------
 #-----------------------------------Checking For Clickjacking--------------------------------------
 #--------------------------------------------------------------------------------------------------
@@ -207,28 +213,16 @@ cat $url/recon/final_params.txt | qsreplace '"><u>hyper</u>' | tee $url/recon/te
 #------------------------------------------------------------------------------------------------------------
 #--------------------------------------Checking For XSS through Referer Header-------------------------------
 #------------------------------------------------------------------------------------------------------------
-echo "[+]Checking For Xss in Referer Header...." | lolcat
-cat $url/recon/live_subs.txt | while read host do ; do curl $host --silent --path-as-is --insecure -L -I -H Referer:https://beebom.com/ | grep "beebom.com" && echo "$host" ; done >> $url/subs_vuln/xss_refer.txt
+#echo "[+]Checking For Xss in Referer Header...." | lolcat
+#cat $url/recon/live_subs.txt | while read host do ; do curl $host --silent --path-as-is --insecure -L -I -H Referer:https://beebom.com/ | grep "beebom.com" && echo "$host" ; done >> $url/subs_vuln/xss_refer.txt
 #--------------------------------------------------------------------------------------------------
 #-------------------------------------Full Scan With Nuclei----------------------------------------
 #--------------------------------------------------------------------------------------------------
-echo "[+] Full Scan With Nuclei" | lolcat
-cat $url/recon/live_subs.txt | nuclei -t /root/nuclei-templates/ >> $url/recon/nuclei.txt
+#echo "[+] Full Scan With Nuclei" | lolcat
+#cat $url/recon/live_subs.txt | nuclei -t /root/nuclei-templates/ >> $url/recon/nuclei.txt
 
 
 
-#--------------------------------------------------------------------------------------------------
-#---------------------------Checking For Sql Injection Vulnerability-------------------------------
-#--------------------------------------------------------------------------------------------------
-echo "[+]Testing For Sqli" | lolcat
-cat $url/recon/final_params.txt | python3 /opt/sqlmap/sqlmap.py
-#------------------------------------------------------------------------------------------------------------
-#---------------------------------Checking For Open redirects through X-Forwarded Header---------------------
-#------------------------------------------------------------------------------------------------------------
-
-#------------------------------------------------------------------------------------------------------------
-#--------------------------------------Checking For CRLF Injection-------------------------------------------
-#------------------------------------------------------------------------------------------------------------
 
 
 
