@@ -1,8 +1,13 @@
 #! /bin/bash 
 url=$1
 
-figlet "TheLionRecon" | lolcat
-echo "                 @Abbas Cyber Security    " | lolcat
+echo "
+ _____ _          _     _             ____                      
+|_   _| |__   ___| |   (_) ___  _ __ |  _ \ ___  ___ ___  _ __  
+  | | | '_ \ / _ \ |   | |/ _ \| '_ \| |_) / _ \/ __/ _ \| '_ \ 
+  | | | | | |  __/ |___| | (_) | | | |  _ <  __/ (_| (_) | | | |
+  |_| |_| |_|\___|_____|_|\___/|_| |_|_| \_\___|\___\___/|_| |_|"
+echo "        @Abbas Cyber Security"
 
 if [ ! -d "$url" ]; then
       mkdir $url
@@ -40,48 +45,48 @@ fi
 #---------------------------------------------------------------------------------
 #-----------------------------Finding SubDomains----------------------------------
 #----------------------------------------------------------------------------------
-echo "[+]Enumurating SubDomains Using Amass..." | lolcat
-amass enum -d $url >> $url/recon/amass.txt
-cat $url/recon/amass.txt | grep $url >> $url/recon/final.txt
-rm $url/recon/amass.txt
+#echo "[+]Enumurating SubDomains Using Amass..." 
+#amass enum -d $url >> $url/recon/amass.txt
+#cat $url/recon/amass.txt | grep $url >> $url/recon/final.txt
+#rm $url/recon/amass.txt
 
-echo "[+]Enumurating SubDomains Using Assetfinder..." | lolcat
+echo "[+]Enumurating SubDomains Using Assetfinder..." 
 assetfinder $url >> $url/recon/assetfinder.txt
 cat $url/recon/assetfinder.txt | grep $url >> $url/recon/final.txt
 rm $url/recon/assetfinder.txt
 
-echo "[+]Enumurating SubDomains Using SubFinder..." | lolcat
+echo "[+]Enumurating SubDomains Using SubFinder..."
 subfinder -d $url -o $url/recon/subfinder.txt
 cat $url/recon/subfinder.txt | grep $url >> $url/recon/final.txt
 rm $url/recon/subfinder.txt
 
-echo "[+]Enumurating SubDomains Using Findomain..." | lolcat
+echo "[+]Enumurating SubDomains Using Findomain..." 
 findomain -t $url -q >> $url/recon/findomain.txt
 cat $url/recon/findomain.txt | grep $url >> $url/recon/final.txt
 rm $url/recon/findomain.txt
 
-echo "[+]Enumurating SubDomains Using Sublist3r..." | lolcat
+echo "[+]Enumurating SubDomains Using Sublist3r..."
 python3 /opt/Sublist3r/sublist3r.py -d $url -o $1/recon/sublist3r.txt
 cat $url/recon/sublist3r.txt | grep $url >> $url/recon/final.txt
 rm $1/recon/sublist3r.txt 
 
-echo "[+]Filtering Repeated Domains........." | lolcat
+echo "[+]Filtering Repeated Domains........." 
 cat $url/recon/final.txt | sort -u | tee $url/recon/final_subs.txt 
 rm $url/recon/final.txt 
 
-echo "[+]Total Unique SubDomains" | lolcat
+echo "[+]Total Unique SubDomains" 
 cat $url/recon/final_subs.txt | wc -l
 #--------------------------------------------------------------------------------------------------
 #-----------------------------------Filtering Live SubDomains--------------------------------------
 #--------------------------------------------------------------------------------------------------
-echo "[+]Removing Dead Domains Using httpx....." | lolcat
-cat $url/recon/final_subs.txt | httpx --silent | sed 's/https\?:\/\///' >> $url/recon/live_check.txt
+echo "[+]Removing Dead Domains Using httpx....." 
+cat $url/recon/final_subs.txt | httpx --silent  >> $url/recon/live_check.txt
 
-echo "[+]Removing Dead Domains Using httprobe....." | lolcat
-cat $url/recon/final_subs.txt | httprobe | sed 's/https\?:\/\///' >> $url/recon/live_check.txt
+echo "[+]Removing Dead Domains Using httprobe....." 
+cat $url/recon/final_subs.txt | httprobe >> $url/recon/live_check.txt
 
 echo "[+]Analyzing Both httpx & httprobe....."
-cat $url/recon/live_check.txt | sort -u | tee $url/recon/live_subs.txt 
+cat $url/recon/live_check.txt | sed 's/https\?:\/\///' | sort -u | tee $url/recon/live_subs.txt 
 
 echo "[+]Total Unique Live SubDomains....."
 cat $url/recon/live_subs.txt | wc -l
@@ -89,26 +94,26 @@ cat $url/recon/live_subs.txt | wc -l
 #------------------------------------------------------------------------------------------------------------
 #--------------------------------------Taking LiveSubs ScreenShots-------------------------------------------
 #------------------------------------------------------------------------------------------------------------
-echo "[+]Taking ScreenShots For Live Websites..." 
-python3 /opt/EyeWitness/Python/EyeWitness.py --web -f $url/recon/livesubs.txt --no-prompt -d $1/recon/EyeWitness --resolve --timeout 240
+#echo "[+]Taking ScreenShots For Live Websites..." 
+#python3 /opt/EyeWitness/Python/EyeWitness.py --web -f $url/recon/livesubs.txt --no-prompt -d $1/recon/EyeWitness --resolve --timeout 240
 
 #--------------------------------------------------------------------------------------------------
 #-------------------------------Checking For SubDomain TakeOver------------------------------------
 #--------------------------------------------------------------------------------------------------
-echo "[+]Testing For SubTakeOver" | lolcat
+echo "[+]Testing For SubTakeOver" 
 subzy --targets  $url/recon/final_subs.txt  --hide_fails >> $url/subs_vuln/sub_take_over.txt
 
 
 #--------------------------------------------------------------------------------------------------
 #-------------------------------Checking For Open Ports--------------------------------------------
 #--------------------------------------------------------------------------------------------------
-echo "[+] Scanning for open ports..."
-nmap -iL $url/recon/livesubs.txt -T4 -oA $url/recon/openports.txt
+#echo "[+] Scanning for open ports..."
+#nmap -iL $url/recon/livesubs.txt -T4 -oA $url/recon/openports.txt
 #--------------------------------------------------------------------------------------------------
 #-------------------------------------Full Scan With Nuclei----------------------------------------
 #--------------------------------------------------------------------------------------------------
-echo "[+] Full Scan With Nuclei" | lolcat
-cat $url/recon/live_subs.txt | nuclei -t /root/nuclei-templates/ >> $url/recon/nuclei.txt
+#echo "[+] Full Scan With Nuclei" | lolcat
+#cat $url/recon/live_subs.txt | nuclei -t /root/nuclei-templates/ >> $url/recon/nuclei.txt
 #--------------------------------------------------------------------------------------------------
 #-----------------------------------Enumurating Urls-----------------------------------------
 #--------------------------------------------------------------------------------------------------
