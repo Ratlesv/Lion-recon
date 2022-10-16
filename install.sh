@@ -155,7 +155,7 @@ echo "[+] Installing cariddi...." | lolcat
 #-----------------------------------------------Installing CRLF Fuzzer------------------------------------------------
 #---------------------------------------------------------------------------------------------------------------------
 git clone https://github.com/commixproject/commix.git commix
-cp commix /opt/
+cp -r commix /opt/
 
 
 
