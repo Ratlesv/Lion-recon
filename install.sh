@@ -42,6 +42,10 @@ go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest
 cp /root/go/bin/nuclei /usr/local/bin/
 nuclei
 #---------------------------------------------------------------------------------------------------------------------
+#--------------------------------------Installing nikto--------------------------------------------------------------
+#---------------------------------------------------------------------------------------------------------------------
+apt install nikto
+#---------------------------------------------------------------------------------------------------------------------
 #--------------------------------------Installing SubDomains Finders--------------------------------------------------
 #---------------------------------------------------------------------------------------------------------------------
 echo "[+] Installing Assestfinder..." 
@@ -51,7 +55,11 @@ echo "[+] Installing SubFinder......."
 go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
 cp /root/go/bin/subfinder /usr/local/bin/
 echo "[+] Installing Findomain........"
-
+curl -LO https://github.com/findomain/findomain/releases/latest/download/findomain-linux.zip}
+unzip findomain-linux.zip
+chmod +x findomain
+sudo mv findomain /usr/bin/findomain
+findomain --help
 echo "[+] Installing Amass......." 
 go install -v github.com/OWASP/Amass/v3/...@master
 cp /root/go/bin/amass /usr/local/bin/
