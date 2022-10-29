@@ -90,30 +90,6 @@ cat $url/recon/live_check.txt | sed 's/https\?:\/\///' | sort -u | tee $url/reco
 
 echo "[+]Total Unique Live SubDomains....."
 cat $url/recon/live_subs.txt | wc -l
-
-#------------------------------------------------------------------------------------------------------------
-#--------------------------------------Taking LiveSubs ScreenShots-------------------------------------------
-#------------------------------------------------------------------------------------------------------------
-#echo "[+]Taking ScreenShots For Live Websites..." 
-#python3 /opt/EyeWitness/Python/EyeWitness.py --web -f $url/recon/livesubs.txt --no-prompt -d $1/recon/EyeWitness --resolve --timeout 240
-
-#--------------------------------------------------------------------------------------------------
-#-------------------------------Checking For SubDomain TakeOver------------------------------------
-#--------------------------------------------------------------------------------------------------
-echo "[+]Testing For SubTakeOver" 
-subzy --targets  $url/recon/final_subs.txt  --hide_fails >> $url/subs_vuln/sub_take_over.txt
-
-
-#--------------------------------------------------------------------------------------------------
-#-------------------------------Checking For Open Ports--------------------------------------------
-#--------------------------------------------------------------------------------------------------
-#echo "[+] Scanning for open ports..."
-#nmap -iL $url/recon/livesubs.txt -T4 -oA $url/recon/openports.txt
-#--------------------------------------------------------------------------------------------------
-#-------------------------------------Full Scan With Nuclei----------------------------------------
-#--------------------------------------------------------------------------------------------------
-#echo "[+] Full Scan With Nuclei" | lolcat
-#cat $url/recon/live_subs.txt | nuclei -t /root/nuclei-templates/ >> $url/recon/nuclei.txt
 #--------------------------------------------------------------------------------------------------
 #-----------------------------------Enumurating Urls-----------------------------------------
 #--------------------------------------------------------------------------------------------------
@@ -182,35 +158,61 @@ crlfuzz -l $url/recon/final_params.txt -o $url/crlf_vuln.txt -s
 #--------------------------------------------------------------------------------------------------
 echo "[+]Testing For SQL Injection...." 
 cat $url/recon/final_params.txt | python3 /opt/sqlmap/sqlmap.py --level 2 --risk 2
-
-
-
-
-
-
-#---------------------------------------------------------------------------------------------------
-
-#--------------------------------------------------------------------------------------------------
-#-------------------------------Checking For Open Redirects----------------------------------------
-#--------------------------------------------------------------------------------------------------
-#echo "[+]Testing For Openredirects" | lolcat
-#cat $url/recon/final_params.txt | qsreplace 'http://evil.com' | while read host do ; do curl -s -L $host -I | grep "evil.com" && echo "$host" ;done >> $url/params_vuln/open_redirect.txt
 #--------------------------------------------------------------------------------------------------
 #-----------------------------------Checking For SSRF----------------------------------------------
 #--------------------------------------------------------------------------------------------------
-#echo "[+]Testing For External SSRF.........." | lolcat
-#cat $url/recon/final_params.txt | qsreplace "https://noor.requestcatcher.com/test" | tee $url/recon/ssrftest.txt && cat $url/recon/ssrftest.txt | while read host do ; do curl --silent --path-as-is --insecure "$host" | grep -qs "request caught" && echo "$host \033[0;31mVulnearble\n"; done >> $url/params_vuln/eSSRF.txt
-#rm $url/recon/ssrftest.txt
+echo "[+]Testing For External SSRF.........." 
+cat $url/recon/final_params.txt | qsreplace "https://noor.requestcatcher.com/test" | tee $url/recon/ssrftest.txt && cat $url/recon/ssrftest.txt | while read host do ; do curl --silent --path-as-is --insecure "$host" | grep -qs "request caught" && echo "$host \033[0;31mVulnearble\n"; done >> $url/eSSRF.txt
+rm $url/recon/ssrftest.txt
 #--------------------------------------------------------------------------------------------------
-#-------------------------------Checking For HTMLi && RXSS-----------------------------------------
+#-------------------------------Checking For XXE Injection----------------------------------------
 #--------------------------------------------------------------------------------------------------
-#echo "[+]Testing For HTML Injection...." | lolcat
-#cat $url/recon/final_params.txt | qsreplace '"><u>hyper</u>' | tee $url/recon/temp.txt && cat $url/recon/temp.txt | while read host do ; do curl --silent --path-as-is --insecure "$host" | grep -qs "<u>hyper</u>" && echo "$host \033[0;31mVulnearble\n"; done > $url/params_vuln/htmli.txt
+
 #--------------------------------------------------------------------------------------------------
-#-----------------------------------Checking For Clickjacking--------------------------------------
+#-------------------------------Checking For Local File Inclusion----------------------------------------
 #--------------------------------------------------------------------------------------------------
-#echo "[+]Checking For Clickjacking...." | lolcat
-#cat $url/recon/live_subs.txt | while read host do ; do curl -I -L --silent --path-as-is --insecure "$host" | grep -qs "x-frame-options" && echo "$host \033[0;31mNot\n" || echo  "$host  \033[0;31mVulnerable" ; done | grep Vulnerable >> $url/subs_vuln/false_positive/clickjack.txt
+echo "[+]Scanning For Local File Inclusion...."
+cat $url/recon/final_params.txt | qsreplace FUZZ | while read url ; do ffuf -u $url -v -mr "root:x" -w /root/lfi-payloads.txt; done > $1/lfi.txt
+#--------------------------------------------------------------------------------------------------
+#-------------------------Checking For Server Side Template Injection-----------------------------
+#--------------------------------------------------------------------------------------------------
+
+
+#--------------------------------------------------------------------------------------------------
+#-------------------------------Scannning HTTP Parameter Smuggling---------------------------------
+#--------------------------------------------------------------------------------------------------
+
+
+
+
+#------------------------------------------------------------------------------------------------------------
+#--------------------------------------Taking LiveSubs ScreenShots-------------------------------------------
+#------------------------------------------------------------------------------------------------------------
+#echo "[+]Taking ScreenShots For Live Websites..." 
+#python3 /opt/EyeWitness/Python/EyeWitness.py --web -f $url/recon/livesubs.txt --no-prompt -d $1/recon/EyeWitness --resolve --timeout 240
+
+#--------------------------------------------------------------------------------------------------
+#-------------------------------Checking For SubDomain TakeOver------------------------------------
+#--------------------------------------------------------------------------------------------------
+echo "[+]Testing For SubTakeOver" 
+subzy --targets  $url/recon/final_subs.txt  --hide_fails >> $url/subs_vuln/sub_take_over.txt
+#--------------------------------------------------------------------------------------------------
+#-------------------------------Checking For Open Ports--------------------------------------------
+#--------------------------------------------------------------------------------------------------
+#echo "[+] Scanning for open ports..."
+#nmap -iL $url/recon/livesubs.txt -T4 -oA $url/recon/openports.txt
+#--------------------------------------------------------------------------------------------------
+#-------------------------------------Full Scan With Nuclei----------------------------------------
+#--------------------------------------------------------------------------------------------------
+echo "[+] Full Scan With Nuclei......." 
+cat $url/recon/live_subs.txt | nuclei -t /root/nuclei-templates/ >> $url/recon/nuclei.txt
+#--------------------------------------------------------------------------------------------------
+#-------------------------------------Full Scan With Nikto----------------------------------------
+#--------------------------------------------------------------------------------------------------
+echo "[+] Full Scan With Nikto...." 
+nikto -h cat $url/recon/live_subs.txt > $url/nikto.txt
+
+
 #------------------------------------------------------------------------------------------------------------
 #----------------------------------------------Checking For CORS---------------------------------------------
 #------------------------------------------------------------------------------------------------------------
@@ -221,11 +223,6 @@ cat $url/recon/final_params.txt | python3 /opt/sqlmap/sqlmap.py --level 2 --risk
 #------------------------------------------------------------------------------------------------------------
 #echo "[+]Checking For Xss in Referer Header...." | lolcat
 #cat $url/recon/live_subs.txt | while read host do ; do curl $host --silent --path-as-is --insecure -L -I -H Referer:https://beebom.com/ | grep "beebom.com" && echo "$host" ; done >> $url/subs_vuln/xss_refer.txt
-#--------------------------------------------------------------------------------------------------
-#-------------------------------------Full Scan With Nuclei----------------------------------------
-#--------------------------------------------------------------------------------------------------
-#echo "[+] Full Scan With Nuclei" | lolcat
-#cat $url/recon/live_subs.txt | nuclei -t /root/nuclei-templates/ >> $url/recon/nuclei.txt
 
 
 
