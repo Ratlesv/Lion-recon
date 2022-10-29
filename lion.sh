@@ -45,10 +45,10 @@ fi
 #---------------------------------------------------------------------------------
 #-----------------------------Finding SubDomains----------------------------------
 #----------------------------------------------------------------------------------
-#echo "[+]Enumurating SubDomains Using Amass..." 
-#amass enum -d $url >> $url/recon/amass.txt
-#cat $url/recon/amass.txt | grep $url >> $url/recon/final.txt
-#rm $url/recon/amass.txt
+echo "[+]Enumurating SubDomains Using Amass..." 
+amass enum -d $url >> $url/recon/amass.txt
+cat $url/recon/amass.txt | grep $url >> $url/recon/final.txt
+rm $url/recon/amass.txt
 
 echo "[+]Enumurating SubDomains Using Assetfinder..." 
 assetfinder $url >> $url/recon/assetfinder.txt
@@ -117,27 +117,27 @@ subzy --targets  $url/recon/final_subs.txt  --hide_fails >> $url/subs_vuln/sub_t
 #--------------------------------------------------------------------------------------------------
 #-----------------------------------Enumurating Urls-----------------------------------------
 #--------------------------------------------------------------------------------------------------
-echo "[+]Enumurating Params From Paramspider...." | lolcat
+echo "[+]Enumurating Params From Paramspider...." 
 python3 /opt/Paramspider/paramspider.py --level high -d $url -p noor -o $1/recon/urls.txt
-echo "[+]Enumurating Params From Waybackurls...." | lolcat
-cat $1/recon/live_subs.txt | waybackurls | sort -u >> $url/recon/urls.txt
-echo "[+]Enumurating Params From gau Tool...." | lolcat
+echo "[+]Enumurating Params From Waybackurls...." 
+cat $1/recon/live_subs.txt | waybackurls | sort -u >> $1/recon/urls.txt
+echo "[+]Enumurating Params From gau Tool...." 
 gau --subs  $url | sort -u >> $url/recon/urls.txt 
-echo "[+]Enumurating Params From gauPlus Tool...." | lolcat
-cat $url/recon/live_subs.txt | gauplus | sort -u >> $url/recon/urls.txt
+echo "[+]Enumurating Params From gauPlus Tool...." 
+cat $url/recon/live_subs.txt | gauplus | sort -u >> $1/recon/urls.txt
 
-echo "[+]Filtering Dups..." | lolcat
-cat $url/recon/params.txt | sort -u | tee $url/recon/final_urls.txt 
+echo "[+]Filtering Dups..." 
+cat $1/recon/urls.txt | sort -u | tee $1/recon/final_urls.txt 
 
 rm $url/recon/urls.txt
 
-echo "[+]Total Unique Params Found" | lolcat
+echo "[+]Total Unique Params Found...." 
 cat $url/recon/final_urls.txt | wc -l
 #--------------------------------------------------------------------------------------------------
 #-----------------------------------Enumurating Parameters-----------------------------------------
 #--------------------------------------------------------------------------------------------------
-echo "[+]Filtering Paramas From urls" | lolcat
-cat $url/recon/final_urls.txt | grep = | qsreplace noor >> $url/recon/final_params.txt 
+echo "[+]Filtering Paramas From urls..." 
+cat $1/recon/final_urls.txt | grep = | qsreplace noor >> $url/recon/final_params.txt 
 
 #====================================================================================================
 #====================================================================================================
@@ -154,32 +154,33 @@ cat $url/recon/final_urls.txt | grep = | qsreplace noor >> $url/recon/final_para
 #--------------------------------------------------------------------------------------------------
 #-------------------------------Checking For Open Redirects----------------------------------------
 #--------------------------------------------------------------------------------------------------
-echo "[+]Testing For Openredirects" | lolcat
-python3 /opt/openredirex/openredirex.py -l $url/recon/final_params.txt -p small_open_payloads.txt >> $url/params_vuln/open_redirect.txt
+echo "[+]Testing For Openredirects" 
+cat $url/recon/final_params.txt | qsreplace 'https://evil.com' | while read host do ; do curl -s -L $host -I | grep "https://evil.com" && echo "$host" ;done >> $url/open_redirect.txt
 #--------------------------------------------------------------------------------------------------
 #-------------------------------Checking For HTMLi Injection---------------------------------------
 #--------------------------------------------------------------------------------------------------
-echo "[+]Testing For HTML Injection...." | lolcat
-cat $url/recon/final_params.txt | qsreplace '"><u>hyper</u>' | tee $url/recon/temp.txt && cat $url/recon/temp.txt | while read host do ; do curl --silent --path-as-is --insecure "$host" | grep -qs "<u>hyper</u>" && echo "$host"; done > $url/params_vuln/htmli.txt
+echo "[+]Testing For HTML Injection...." 
+cat $url/recon/final_params.txt | qsreplace '"><u>hyper</u>' | tee $url/recon/temp.txt && cat $url/recon/temp.txt | while read host do ; do curl --silent --path-as-is --insecure "$host" | grep -qs "<u>hyper</u>" && echo "$host"; done > $url/htmli.txt
+rm $url/recon/temp.txt
 #--------------------------------------------------------------------------------------------------
 #-------------------------------Checking For XSS Injection-----------------------------------------
 #--------------------------------------------------------------------------------------------------
-echo "[+]Testing For XSS Injection...." | lolcat
-dalfox file cat $url/params_vuln/htmli.txt -o $url/params_vuln/xss.txt
+echo "[+]Testing For XSS Injection...." 
+dalfox file $url/htmli.txt -o $url/xss.txt
 #--------------------------------------------------------------------------------------------------
 #-------------------------------Checking For Command Injection-----------------------------------------
 #--------------------------------------------------------------------------------------------------
-echo "[+]Testing For Command Injection...." | lolcat
+echo "[+]Testing For Command Injection...." 
 python3 /opt/commix/commix.py -m $url/recon/final_params.txt --batch 
 #--------------------------------------------------------------------------------------------------
 #-------------------------------Checking For CRLF Injection-----------------------------------------
 #--------------------------------------------------------------------------------------------------
-echo "[+]Testing For CRLF Injection...." | lolcat
-crlfuzz -l $url/recon/final_params.txt -o $url/params_vuln/crlf_vuln.txt -s 
+echo "[+]Testing For CRLF Injection...." 
+crlfuzz -l $url/recon/final_params.txt -o $url/crlf_vuln.txt -s 
 #--------------------------------------------------------------------------------------------------
 #-------------------------------Checking For SQL Injection-----------------------------------------
 #--------------------------------------------------------------------------------------------------
-echo "[+]Testing For SQL Injection...." | lolcat
+echo "[+]Testing For SQL Injection...." 
 cat $url/recon/final_params.txt | python3 /opt/sqlmap/sqlmap.py --level 2 --risk 2
 
 
