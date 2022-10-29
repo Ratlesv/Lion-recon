@@ -24,51 +24,22 @@ sudo apt install php -y
 #sudo apt-get install xargs -y
 #sudo apt install -y awscli -y
 #sudo apt-get install nmap -y
-#---------------------------------------------------------------------------------------------------------------------
-#--------------------------------------Installing Go-Lang-------------------------------------------------------------
-#---------------------------------------------------------------------------------------------------------------------
-echo "[+] Installing Go-Lang....." | lolcat
+echo "[+] Installing Go-Lang....." 
 wget https://go.dev/dl/go1.19.2.linux-amd64.tar.gz
 cp go1.19.2.linux-amd64.tar.gz /root/
 rm -rf /usr/local/go && tar -C /usr/local -xzf go1.19.2.linux-amd64.tar.gz
 export PATH=$PATH:/usr/local/go/bin
 go version
 
+figlet "Installing Recon Tools"
+echo "[+]Installing ffuf...."
+echo "[+]Installing qsreplace...."
+echo "[+]Installing httpx, httprobe...."
+echo "[+]Installing gf-patterns...."
+echo "[+]Installing kxss, Gxss"
+echo "[+]Installing ScreenShoters"
 
-
-figlet "Installing Url Fuzzers"
-echo "Installing Sqlmap......" 
-git clone --depth 1 https://github.com/sqlmapproject/sqlmap.git sqlmap
-mv sqlmap /opt/
-echo "Installing Commix..."
-echo "Installing crlfuzzers...."
-echo "Installing tplmap..."
-echo "Installing Dalfox..."
-echo "Installing XXE Finder...."
-echo "Installing smuggler & "
-git clone https://github.com/defparam/smuggler.git
-mv smuggler /opt/
-
-figlet "Installing Domain Fuzzers"
-echo "Installing Nuclei....."
-echo "Installing Nmap...."
-echo "Installing Nikto...."
-echo "Installing subzy...."
-
-#---------------------------------------------------------------------------------------------------------------------
-#--------------------------------------Installing Nuclei--------------------------------------------------------------
-#---------------------------------------------------------------------------------------------------------------------
-echo "[+] Installing Nuclei....." 
-go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest
-cp /root/go/bin/nuclei /usr/local/bin/
-nuclei
-#---------------------------------------------------------------------------------------------------------------------
-#--------------------------------------Installing nikto--------------------------------------------------------------
-#---------------------------------------------------------------------------------------------------------------------
-apt install nikto
-#---------------------------------------------------------------------------------------------------------------------
 #--------------------------------------Installing SubDomains Finders--------------------------------------------------
-#---------------------------------------------------------------------------------------------------------------------
 echo "[+] Installing Assestfinder..." 
 go install github.com/tomnomnom/assetfinder@latest
 cp /root/go/bin/assetfinder /usr/local/bin
@@ -88,6 +59,53 @@ echo "[+] Installing SubList3r........."
 git clone https://github.com/aboul3la/sublist3r.git 
 mv sublist3r /opt/
 pip3 install -r /opt/sublist3r/requirements.txt
+#------------------------------------------Installing Url Crawlers ---------------------------------------------------
+echo "[+] Installing Waybackurls....." 
+go install github.com/tomnomnom/waybackurls@latest
+cp /root/go/bin/waybackurls /usr/local/bin/
+echo "[+] Installing gau - Get All Urls" 
+go install github.com/lc/gau/v2/cmd/gau@latest
+cp /root/go/bin/gau /usr/local/bin/
+echo "[+] Installing gauplus........" 
+go install github.com/bp0lr/gauplus@latest
+cp /root/go/bin/gauplus /usr/local/bin/
+echo "[+] Installing Paramspider......"
+git clone https://github.com/devanshbatham/paramspider.git
+mv Paramspider /opt/
+pip3 install -r /opt/paramspider/requirements.txt
+
+
+figlet "Installing Url Fuzzers"
+echo "Installing Sqlmap......" 
+git clone --depth 1 https://github.com/sqlmapproject/sqlmap.git sqlmap
+mv sqlmap /opt/
+echo "Installing Commix..."
+echo "Installing crlfuzzers...."
+echo "Installing tplmap..."
+echo "Installing Dalfox..."
+echo "Installing XXE Finder...."
+echo "Installing smuggler & "
+git clone https://github.com/defparam/smuggler.git
+mv smuggler /opt/
+
+figlet "Installing Domain Fuzzers"
+echo "Installing Nuclei....."
+echo "Installing Nmap...."
+echo "Installing Nikto...."
+echo "Installing Subzy....."
+
+#---------------------------------------------------------------------------------------------------------------------
+#--------------------------------------Installing Nuclei--------------------------------------------------------------
+#---------------------------------------------------------------------------------------------------------------------
+echo "[+] Installing Nuclei....." 
+go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest
+cp /root/go/bin/nuclei /usr/local/bin/
+nuclei
+#---------------------------------------------------------------------------------------------------------------------
+#--------------------------------------Installing nikto--------------------------------------------------------------
+#---------------------------------------------------------------------------------------------------------------------
+apt install nikto
+
 #---------------------------------------------------------------------------------------------------------------------
 #------------------------------------------Installing ScreenShoters---------------------------------------------------
 #---------------------------------------------------------------------------------------------------------------------
