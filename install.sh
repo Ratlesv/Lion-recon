@@ -33,11 +33,30 @@ go version
 
 figlet "Installing Recon Tools"
 echo "[+]Installing ffuf...."
+go install github.com/ffuf/ffuf@latest
+cp /root/go/bin/ffuf /usr/local/bin/
 echo "[+]Installing qsreplace...."
+go install github.com/tomnomnom/qsreplace@latest
+cp /root/go/bin/qsreplace /usr/local/bin/
 echo "[+]Installing httpx, httprobe...."
+go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
+cp /root/go/bin/httpx /usr/local/bin/
+go install github.com/tomnomnom/httprobe@latest 
+cp /root/go/bin/httprobe /usr/local/bin/
 echo "[+]Installing gf-patterns...."
-echo "[+]Installing kxss, Gxss"
-echo "[+]Installing ScreenShoters"
+go install github.com/tomnomnom/gf@latest
+cp /root/go/bin/gf /usr/local/bin/
+echo "[+]Installing kxss, Gxss...."
+go install github.com/KathanP19/Gxss@latest
+cp /root/go/bin/Gxss /usr/local/bin/
+go install github.com/Emoe/kxss@latest
+cp /root/go/bin/kxss /usr/local/bin/
+echo "[+]Installing ScreenShoters (Eye & GoWitness)...."
+git clone https://github.com/FortyNorthSecurity/EyeWitness.git
+mv EyeWitness /opt/
+sudo /opt/EyeWitness/Python/setup/setup.sh
+go install github.com/sensepost/gowitness@latest
+cp /root/go/bin/gowitness /usr/local/bin/
 
 #--------------------------------------Installing SubDomains Finders--------------------------------------------------
 echo "[+] Installing Assestfinder..." 
@@ -75,127 +94,50 @@ mv Paramspider /opt/
 pip3 install -r /opt/paramspider/requirements.txt
 
 
+
 figlet "Installing Url Fuzzers"
 echo "Installing Sqlmap......" 
 git clone --depth 1 https://github.com/sqlmapproject/sqlmap.git sqlmap
 mv sqlmap /opt/
 echo "Installing Commix..."
+git clone https://github.com/commixproject/commix.git commix
+mv commix /opt/
+python3 /opt/commix/setup.py
 echo "Installing crlfuzzers...."
+GO111MODULE=on go install github.com/dwisiswant0/crlfuzz/cmd/crlfuzz@latest
+cp /root/go/bin/crlfuzz /usr/local/bin/
 echo "Installing tplmap..."
+https://github.com/epinna/tplmap.git
+mv tplmap /opt/
+pip3 install -r /opt/tplmap/requirements.txt 
 echo "Installing Dalfox..."
+go install github.com/hahwul/dalfox/v2@latest
+cp /root/go/bin/dalfox /usr/local/bin/
 echo "Installing XXE Finder...."
 echo "Installing smuggler & "
 git clone https://github.com/defparam/smuggler.git
 mv smuggler /opt/
 
+
+
+
 figlet "Installing Domain Fuzzers"
 echo "Installing Nuclei....."
-echo "Installing Nmap...."
-echo "Installing Nikto...."
-echo "Installing Subzy....."
-
-#---------------------------------------------------------------------------------------------------------------------
-#--------------------------------------Installing Nuclei--------------------------------------------------------------
-#---------------------------------------------------------------------------------------------------------------------
-echo "[+] Installing Nuclei....." 
 go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest
 cp /root/go/bin/nuclei /usr/local/bin/
 nuclei
-#---------------------------------------------------------------------------------------------------------------------
-#--------------------------------------Installing nikto--------------------------------------------------------------
-#---------------------------------------------------------------------------------------------------------------------
-apt install nikto
-
-#---------------------------------------------------------------------------------------------------------------------
-#------------------------------------------Installing ScreenShoters---------------------------------------------------
-#---------------------------------------------------------------------------------------------------------------------
-echo "[+] Installing EyeWitness....." 
-git clone https://github.com/FortyNorthSecurity/EyeWitness.git
-mv EyeWitness /opt/
-sudo /opt/EyeWitness/Python/setup/setup.sh
-
-echo "[+] Installing GoWitness....." 
-go install github.com/sensepost/gowitness@latest
-cp /root/go/bin/gowitness /usr/local/bin/
-
-#---------------------------------------------------------------------------------------------------------------------
-#------------------------------------------Installing Url Crawlers ---------------------------------------------------
-#---------------------------------------------------------------------------------------------------------------------
-echo "[+] Installing Waybackurls....." 
-go install github.com/tomnomnom/waybackurls@latest
-cp /root/go/bin/waybackurls /usr/local/bin/
-echo "[+] Installing gau - Get All Urls" 
-go install github.com/lc/gau/v2/cmd/gau@latest
-cp /root/go/bin/gau /usr/local/bin/
-echo "[+] Installing gauplus........" 
-go install github.com/bp0lr/gauplus@latest
-cp /root/go/bin/gauplus /usr/local/bin/
-echo "[+] Installing Paramspider......"
-git clone https://github.com/devanshbatham/paramspider.git
-mv Paramspider /opt/
-pip3 install -r /opt/paramspider/requirements.txt
-
-#---------------------------------------------------------------------------------------------------------------------
-#--------------------------------------Installing Subs Live Checker---------------------------------------------------
-#---------------------------------------------------------------------------------------------------------------------
-echo "[+]Installing httpx........" 
-go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
-cp /root/go/bin/httpx /usr/local/bin/
-echo "[+]Installing httprobe......" 
-go install github.com/tomnomnom/httprobe@latest 
-cp /root/go/bin/httprobe /usr/local/bin/
-
-#---------------------------------------------------------------------------------------------------------------------
-#-----------------------------------------Installing SubTakeOver Checkers---------------------------------------------
-#---------------------------------------------------------------------------------------------------------------------
-echo "Installing Subzy........" 
+echo "Installing Nmap...."
+apt install nmap -y
+echo "Installing Nikto...."
+apt install nikto -y 
+echo "Installing Subzy....."
 go install -v github.com/lukasikic/subzy@latest
 cp /root/go/bin/subzy /usr/local/bin/
 
-#---------------------------------------------------------------------------------------------------------------------
-#------------------------------------------------Installing Sql Map---------------------------------------------------
-#---------------------------------------------------------------------------------------------------------------------
 
-#---------------------------------------------------------------------------------------------------------------------
-#-----------------------------------------------Installing CRLF Fuzzer------------------------------------------------
-#---------------------------------------------------------------------------------------------------------------------
-echo "Installing crlfuzzer"
-GO111MODULE=on go install github.com/dwisiswant0/crlfuzz/cmd/crlfuzz@latest
-cp /root/go/bin/crlfuzz /usr/local/bin/
 
-#---------------------------------------------------------------------------------------------------------------------
-#-----------------------------------------------Installing CRLF Fuzzer------------------------------------------------
-#---------------------------------------------------------------------------------------------------------------------
-echo "Installing crlfuzzer"
-GO111MODULE=on go install github.com/dwisiswant0/crlfuzz/cmd/crlfuzz@latest
-cp /root/go/bin/crlfuzz /usr/local/bin/
-#---------------------------------------------------------------------------------------------------------------------
-#-----------------------------------------------Installing CRLF Fuzzer------------------------------------------------
-#---------------------------------------------------------------------------------------------------------------------
-echo "Installing crlfuzzer"
-GO111MODULE=on go install github.com/dwisiswant0/crlfuzz/cmd/crlfuzz@latest
-cp /root/go/bin/crlfuzz /usr/local/bin/
-#---------------------------------------------------------------------------------------------------------------------
-#------------------------------------------Installing Usefull Tools---------------------------------------------------
-#---------------------------------------------------------------------------------------------------------------------
-echo "Installing qsreplace....." 
-go install github.com/tomnomnom/qsreplace@latest
-cp /root/go/bin/qsreplace /usr/local/bin/
-echo "[+] Installing ffuf" 
-go install github.com/ffuf/ffuf@latest
-cp /root/go/bin/ffuf /usr/local/bin/
-echo "[+] Installing gf Patterns" 
-go install github.com/tomnomnom/gf@latest
-cp /root/go/bin/gf /usr/local/bin/
-echo "[+] Installing Dalfox..." 
-go install github.com/hahwul/dalfox/v2@latest
-cp /root/go/bin/dalfox /usr/local/bin/
-echo "[+] Installing Gxss....." 
-go install github.com/KathanP19/Gxss@latest
-cp /root/go/bin/dalfox /usr/local/bin/
-echo "[+] Installing kxss....." 
-go install github.com/Emoe/kxss@latest
-cp /root/go/bin/dalfox /usr/local/bin/
+
+
 
 
 
