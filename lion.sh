@@ -80,6 +80,7 @@ cat $url/recon/final_subs.txt | httprobe >> $url/recon/live_check.txt
 
 echo "[+]Analyzing Both httpx & httprobe....."
 cat $url/recon/live_check.txt | sed 's/https\?:\/\///' | sort -u | tee $url/recon/live_subs.txt 
+rm $url/recon/live_check.txt
 
 echo "[+]Total Unique Live SubDomains....."
 cat $url/recon/live_subs.txt | wc -l
@@ -87,7 +88,7 @@ cat $url/recon/live_subs.txt | wc -l
 #-----------------------------------Enumurating Urls-----------------------------------------
 #--------------------------------------------------------------------------------------------------
 echo "[+]Enumurating Params From Paramspider...." 
-python3 /opt/Paramspider/paramspider.py --level high -d $url -p noor -o $1/recon/urls.txt
+python3 /opt/paramspider/paramspider.py --level high -d $url -p noor -o $1/recon/urls.txt
 echo "[+]Enumurating Params From Waybackurls...." 
 cat $1/recon/live_subs.txt | waybackurls | sort -u >> $1/recon/urls.txt
 echo "[+]Enumurating Params From gau Tool...." 
@@ -167,12 +168,12 @@ figlet "Fuzzing Domains"
 #-------------------------------Checking For SubDomain TakeOver------------------------------------
 #--------------------------------------------------------------------------------------------------
 echo "[+]Testing For SubTakeOver" 
-subzy --targets  $url/recon/final_subs.txt  --hide_fails >> $url/subs_vuln/sub_take_over.txt
+subzy --targets  $url/recon/final_subs.txt  --hide_fails >> $url/sub_take_over.txt
 #--------------------------------------------------------------------------------------------------
 #-------------------------------------Full Scan With Nuclei----------------------------------------
 #--------------------------------------------------------------------------------------------------
 echo "[+] Full Scan With Nuclei......." 
-cat $url/recon/live_subs.txt | nuclei -t /root/nuclei-templates/ >> $url/recon/nuclei.txt
+cat $url/recon/live_subs.txt | nuclei -t /root/nuclei-templates/ >> $url/nuclei.txt
 #--------------------------------------------------------------------------------------------------
 #-------------------------------------Full Scan With Nikto----------------------------------------
 #--------------------------------------------------------------------------------------------------
