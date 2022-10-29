@@ -34,6 +34,27 @@ rm -rf /usr/local/go && tar -C /usr/local -xzf go1.19.2.linux-amd64.tar.gz
 export PATH=$PATH:/usr/local/go/bin
 go version
 
+
+
+figlet "Installing Url Fuzzers"
+echo "Installing Sqlmap......" 
+git clone --depth 1 https://github.com/sqlmapproject/sqlmap.git sqlmap
+mv sqlmap /opt/
+echo "Installing Commix..."
+echo "Installing crlfuzzers...."
+echo "Installing tplmap..."
+echo "Installing Dalfox..."
+echo "Installing XXE Finder...."
+echo "Installing smuggler & "
+git clone https://github.com/defparam/smuggler.git
+mv smuggler /opt/
+
+figlet "Installing Domain Fuzzers"
+echo "Installing Nuclei....."
+echo "Installing Nmap...."
+echo "Installing Nikto...."
+echo "Installing subzy...."
+
 #---------------------------------------------------------------------------------------------------------------------
 #--------------------------------------Installing Nuclei--------------------------------------------------------------
 #---------------------------------------------------------------------------------------------------------------------
@@ -116,9 +137,7 @@ cp /root/go/bin/subzy /usr/local/bin/
 #---------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------Installing Sql Map---------------------------------------------------
 #---------------------------------------------------------------------------------------------------------------------
-echo "Installing Sqlmap......" 
-git clone --depth 1 https://github.com/sqlmapproject/sqlmap.git sqlmap
-mv sqlmap /opt/
+
 #---------------------------------------------------------------------------------------------------------------------
 #-----------------------------------------------Installing CRLF Fuzzer------------------------------------------------
 #---------------------------------------------------------------------------------------------------------------------
