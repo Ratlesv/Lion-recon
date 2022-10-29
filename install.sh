@@ -66,7 +66,7 @@ echo "[+] Installing SubFinder......."
 go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
 cp /root/go/bin/subfinder /usr/local/bin/
 echo "[+] Installing Findomain........"
-curl -LO https://github.com/findomain/findomain/releases/latest/download/findomain-linux.zip}
+curl -LO https://github.com/findomain/findomain/releases/latest/download/findomain-linux.zip
 unzip findomain-linux.zip
 chmod +x findomain
 sudo mv findomain /usr/bin/findomain
@@ -90,7 +90,7 @@ go install github.com/bp0lr/gauplus@latest
 cp /root/go/bin/gauplus /usr/local/bin/
 echo "[+] Installing Paramspider......"
 git clone https://github.com/devanshbatham/paramspider.git
-mv Paramspider /opt/
+mv paramspider /opt/
 pip3 install -r /opt/paramspider/requirements.txt
 
 
