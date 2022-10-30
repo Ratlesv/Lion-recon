@@ -39,9 +39,9 @@ fi
 #-----------------------------Finding SubDomains----------------------------------
 #----------------------------------------------------------------------------------
 echo "[+]Enumurating SubDomains Using Amass..." 
-amass enum -d $url >> $url/recon/amass.txt
-cat $url/recon/amass.txt | grep $url >> $url/recon/final.txt
-rm $url/recon/amass.txt
+#amass enum -d $url >> $url/recon/amass.txt
+#cat $url/recon/amass.txt | grep $url >> $url/recon/final.txt
+#rm $url/recon/amass.txt
 
 echo "[+]Enumurating SubDomains Using Assetfinder..." 
 assetfinder $url >> $url/recon/assetfinder.txt
@@ -91,10 +91,10 @@ echo "[+]Enumurating Params From Paramspider...."
 python3 /opt/paramspider/paramspider.py --level high -d $url -p noor -o $1/recon/urls.txt
 echo "[+]Enumurating Params From Waybackurls...." 
 cat $1/recon/live_subs.txt | waybackurls | sort -u >> $1/recon/urls.txt
-echo "[+]Enumurating Params From gau Tool...." 
-gau --subs  $url | sort -u >> $url/recon/urls.txt 
-echo "[+]Enumurating Params From gauPlus Tool...." 
-cat $url/recon/live_subs.txt | gauplus | sort -u >> $1/recon/urls.txt
+#echo "[+]Enumurating Params From gau Tool...." 
+#gau --subs  $url | sort -u >> $url/recon/urls.txt 
+#echo "[+]Enumurating Params From gauPlus Tool...." 
+#cat $url/recon/live_subs.txt | gauplus | sort -u >> $1/recon/urls.txt
 
 echo "[+]Filtering Dups..." 
 cat $1/recon/urls.txt | sort -u | tee $1/recon/final_urls.txt 
