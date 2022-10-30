@@ -6,6 +6,27 @@ TheLionRecon is a Simple Bash Script. Combination of Tools.
 Which Automates Recon. And Finds Common Vulnerabilities.
 
 ## Summary
+```
+_____ _          _     _             ____                      
+|_   _| |__   ___| |   (_) ___  _ __ |  _ \ ___  ___ ___  _ __  
+  | | | '_ \ / _ \ |   | |/ _ \| '_ \| |_) / _ \/ __/ _ \| '_ \ 
+  | | | | | |  __/ |___| | (_) | | | |  _ <  __/ (_| (_) | | | |
+  |_| |_| |_|\___|_____|_|\___/|_| |_|_| \_\___|\___\___/|_| |_|"
+                    @Abbas Cyber Security
+```
+### Installation
+```
+git clone https://github.com/noor-sec/TheLionRecon
+cd TheLionRecon
+chmod 777 install.sh
+./install.sh
+chmod 777 lion.sh
+```
+### Run
+```
+./lion.sh target.com
+```
+
 ### Fuzzing Domains
 1. TheLionRecon First Enumurate Subdomains Passive & Active Resources >> $1/recon/final_subs.txt 
 2. Filtering Live SubDomains >> $1/recon/live_subs.txt 
@@ -40,41 +61,6 @@ Which Automates Recon. And Finds Common Vulnerabilities.
 10. Scanning For HTTP Request Smuggling >> $1/params_vuln/smuggling.txt
 
 
-
-
-
-
-### Finds Common Vulnerabilities After Recon
-+ Reflected Xss
-+ HTML Injection
-+ External SSRF
-+ Open Redirects
-+ Sql Injection
-+ Xss Through Header
-+ Open Redirect Through Header
-+ CORS
-+ Clickjacking
-+ XXE Injection ( Adding Soon )
-+ Command Injection ( Adding Soon )
-+ CRLF Injection ( Adding Soon )
-+ Local File Inclusion ( Adding Soon )
-+ SubDomain TakeOver
-+ Broken Link Hijacking ( Adding Soon )
-
-### Recon ( information Gathering )
-+ Subdomains ( Active & Passive )
-+ Urls & Parameters ( Active & Passive )
-+ Filtering Live Domains
-+ ScreenShoting Live Domains
-+ Open Ports With Nmap
-+ Nikto Scan
-+ Email Recon
-+ Github Recon
-+ Whois 
-+ 
-+ Finally Full Blind Scan With Nuclei
-
-
 ### Installation
 ```
 git clone https://github.com/noor-sec/TheLionRecon
@@ -87,22 +73,6 @@ chmod 777 lion.sh
 ```
 ./lion.sh target.com
 ```
-
-### Tools Included
-+ Assetfinder
-+ SubFinder
-+ Sublist3r
-+ FinDomain
-+ Amass
-+ Go
-+ Waybackurls
-+ gau
-+ gauplus
-+ ParamSpider
-+ qsreplace
-+ Sqlmap
-
-
 
 
 # Support
