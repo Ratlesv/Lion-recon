@@ -6,7 +6,7 @@ TheLionRecon is a Simple Bash Script. Combination of Tools.
 Which Automates Recon. And Finds Common Vulnerabilities.
 
 ## Summary
-### Scanning Domains
+### Fuzzing Domains
 1. TheLionRecon First Enumurate Subdomains Passive & Active Resources >> $1/recon/final_subs.txt 
 2. Filtering Live SubDomains >> $1/recon/live_subs.txt 
 3. ScreenShoting Live SubDomains >> $1/recon/screenshots/
@@ -20,16 +20,15 @@ Which Automates Recon. And Finds Common Vulnerabilities.
 11. Full Blind Scan With Nucluei >> $1/recon/nuclei.txt
 12. Scanning With Dirbuster $1/recon/dirbuster.txt
 13. Scanning For Clickjacking
-
 10. Scanning For SubDomain TakeOver >> $1/subs_vuln/sub_take_over.txt
 11. Scanning For Broken Links >> 
 12. Scanning For Open Redirect Through Headers >>
 13. Scanning For Reflected Xss Through Headers >>
 14. Scanning For CORS Through Headers >>
-### Scanning Parameters
+
+### Fuzzing Parameters
 
 1. Then Enumurate Urls & Parameters Using Passive & Active Resources >> $1/recon/final_params.txt 
-
 2. Scanning For Open Redirects >> $1/params_vuln/open_redirect.txt
 3. Scanning For External SSRF >> $1/params_vuln/eSSRF.txt
 4. Scanning For HTML Injection >> $1/params_vuln/HTMLi.txt
@@ -38,6 +37,7 @@ Which Automates Recon. And Finds Common Vulnerabilities.
 7. Scanning For Command Injection >> $1/params_vuln/commandi.txt
 8. Scanning For Sql Injection >> $1/params_vuln/sqli.txt
 9. Scanning For Local File Inclusion >> $1/params_vuln/lfi.txt
+10. Scanning For HTTP Request Smuggling >> $1/params_vuln/smuggling.txt
 
 
 
@@ -107,5 +107,6 @@ chmod 777 lion.sh
 
 # Support
 If You Love My Work. Please Support For OSWE
+
 <a href="https://www.buymeacoffee.com/noornoor" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 
