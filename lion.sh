@@ -39,9 +39,9 @@ fi
 #-----------------------------Finding SubDomains----------------------------------
 #----------------------------------------------------------------------------------
 echo "[+]Enumurating SubDomains Using Amass..." 
-#amass enum -d $url >> $url/recon/amass.txt
-#cat $url/recon/amass.txt | grep $url >> $url/recon/final.txt
-#rm $url/recon/amass.txt
+amass enum -d $url >> $url/recon/amass.txt
+cat $url/recon/amass.txt | grep $url >> $url/recon/final.txt
+rm $url/recon/amass.txt
 
 echo "[+]Enumurating SubDomains Using Assetfinder..." 
 assetfinder $url >> $url/recon/assetfinder.txt
@@ -91,10 +91,10 @@ echo "[+]Enumurating Params From Paramspider...."
 python3 /opt/paramspider/paramspider.py --level high -d $url -p noor -o $1/recon/urls.txt
 echo "[+]Enumurating Params From Waybackurls...." 
 cat $1/recon/live_subs.txt | waybackurls | sort -u >> $1/recon/urls.txt
-#echo "[+]Enumurating Params From gau Tool...." 
-#gau --subs  $url | sort -u >> $url/recon/urls.txt 
-#echo "[+]Enumurating Params From gauPlus Tool...." 
-#cat $url/recon/live_subs.txt | gauplus | sort -u >> $1/recon/urls.txt
+echo "[+]Enumurating Params From gau Tool...." 
+gau --subs  $url | sort -u >> $url/recon/urls.txt 
+echo "[+]Enumurating Params From gauPlus Tool...." 
+cat $url/recon/live_subs.txt | gauplus | sort -u >> $1/recon/urls.txt
 
 echo "[+]Filtering Dups..." 
 cat $1/recon/urls.txt | sort -u | tee $1/recon/final_urls.txt 
@@ -123,13 +123,13 @@ rm $url/recon/temp.txt
 #--------------------------------------------------------------------------------------------------
 #-------------------------------Checking For XSS Injection-----------------------------------------
 #--------------------------------------------------------------------------------------------------
-echo "[+]Testing For XSS Injection...." 
-dalfox file $url/htmli.txt -o $url/xss.txt
+#echo "[+]Testing For XSS Injection...." 
+#dalfox file $url/htmli.txt -o $url/xss.txt
 #--------------------------------------------------------------------------------------------------
 #-------------------------------Checking For Command Injection-----------------------------------------
 #--------------------------------------------------------------------------------------------------
-echo "[+]Testing For Command Injection...." 
-python3 /opt/commix/commix.py -m $url/recon/final_params.txt --batch 
+#echo "[+]Testing For Command Injection...." 
+#python3 /opt/commix/commix.py -m $url/recon/final_params.txt --batch 
 #--------------------------------------------------------------------------------------------------
 #-------------------------------Checking For CRLF Injection-----------------------------------------
 #--------------------------------------------------------------------------------------------------
@@ -153,8 +153,8 @@ rm $url/recon/ssrftest.txt
 #--------------------------------------------------------------------------------------------------
 #-------------------------------Checking For Local File Inclusion----------------------------------------
 #--------------------------------------------------------------------------------------------------
-echo "[+]Scanning For Local File Inclusion...."
-cat $url/recon/final_params.txt | qsreplace FUZZ | while read url ; do ffuf -u $host -v -mr "root:x" -w /opt/payloads/lfi-small.txt ; done > $1/lfi.txt
+#echo "[+]Scanning For Local File Inclusion...."
+#cat $url/recon/final_params.txt | qsreplace FUZZ | while read url ; do ffuf -u $host -v -mr "root:x" -w /opt/payloads/lfi-small.txt ; done > $1/lfi.txt
 #--------------------------------------------------------------------------------------------------
 #-------------------------Checking For Server Side Template Injection-----------------------------
 #--------------------------------------------------------------------------------------------------
@@ -177,8 +177,8 @@ cat $1/recon/live_subs.txt | nuclei -t /root/nuclei-templates/ >> $1/nuclei.txt
 #--------------------------------------------------------------------------------------------------
 #-------------------------------------Full Scan With Nikto----------------------------------------
 #--------------------------------------------------------------------------------------------------
-echo "[+] Full Scan With Nikto...." 
-nikto -h $url/recon/live_subs.txt > $url/nikto.txt
+#echo "[+] Full Scan With Nikto...." 
+#nikto -h $url/recon/live_subs.txt > $url/nikto.txt
 #------------------------------------------------------------------------------------------------------------
 #----------------------------------------------Checking For CORS---------------------------------------------
 #------------------------------------------------------------------------------------------------------------
@@ -220,8 +220,8 @@ figlet "Recon v2"
 #--------------------------------------------------------------------------------------------------
 #-------------------------------Checking For Open Ports--------------------------------------------
 #--------------------------------------------------------------------------------------------------
-echo "[+] Scanning for open ports..."
-nmap -iL $url/recon/live_subs.txt -T4 -oA $url/recon/openports.txt
+#echo "[+] Scanning for open ports..."
+#nmap -iL $url/recon/live_subs.txt -T4 -oA $url/recon/openports.txt
 #--------------------------------------------------------------------------------------------------
 #-------------------------------------Fuzzing For GitHub Recon----------------------------------------
 #--------------------------------------------------------------------------------------------------
