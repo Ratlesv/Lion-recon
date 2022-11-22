@@ -153,8 +153,8 @@ rm $url/recon/ssrftest.txt
 #--------------------------------------------------------------------------------------------------
 #-------------------------------Checking For Local File Inclusion----------------------------------------
 #--------------------------------------------------------------------------------------------------
-#echo "[+]Scanning For Local File Inclusion...."
-#cat $url/recon/final_params.txt | qsreplace FUZZ | while read url ; do ffuf -u $host -v -mr "root:x" -w /opt/payloads/lfi-small.txt ; done > $1/lfi.txt
+echo "[+]Scanning For Local File Inclusion...."
+cat $url/recon/final_params.txt | qsreplace FUZZ | while read host ; do ffuf -u $host -v -mr "root:x" -w payloads/lfi-small.txt ; done > $1/lfi.txt
 #--------------------------------------------------------------------------------------------------
 #-------------------------Checking For Server Side Template Injection-----------------------------
 #--------------------------------------------------------------------------------------------------
