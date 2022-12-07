@@ -82,6 +82,9 @@ pip3 install -r /opt/sublist3r/requirements.txt
 echo "[+] Installing Waybackurls....." 
 go install github.com/tomnomnom/waybackurls@latest
 cp /root/go/bin/waybackurls /usr/local/bin/
+echo "[+] Installing Katana....." 
+go install github.com/projectdiscovery/katana/cmd/katana@latest
+cp /root/go/bin/katana /usr/local/bin/
 echo "[+] Installing gau - Get All Urls" 
 go install github.com/lc/gau/v2/cmd/gau@latest
 cp /root/go/bin/gau /usr/local/bin/
