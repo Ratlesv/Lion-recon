@@ -158,7 +158,7 @@ cat $url/recon/final_params.txt | qsreplace FUZZ | while read host ; do ffuf -u 
 #--------------------------------------------------------------------------------------------------
 #-------------------------Checking For Server Side Template Injection-----------------------------
 #--------------------------------------------------------------------------------------------------
-
+#cat params.txt | qsreplace FUZZ | while read url ; do ffuf -u $url -v -mr "noor49" -w payloads.txt ; done > ssti.txt
 
 #--------------------------------------------------------------------------------------------------
 #-------------------------------Scannning HTTP Parameter Smuggling---------------------------------
