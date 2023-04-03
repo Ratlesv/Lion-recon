@@ -28,7 +28,8 @@ chmod 777 lion.sh
 ```
 ./lion.sh target.com
 ```
-
+### Mind Map
+<img src="https://user-images.githubusercontent.com/85073575/224542224-a20ae3a7-e86f-4d78-b7de-e649a0abde88.png">
 ### Fuzzing Domains
 1. TheLionRecon First Enumurate Subdomains Passive & Active Resources >> $1/recon/final_subs.txt 
 2. Filtering Live SubDomains >> $1/recon/live_subs.txt 
